@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}About f/{{ forum.name }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="forum-page">
+    <div class="forum-header">
+        <h2><a href="/f/{{ forum.name }}/">f/{{ forum.name }}</a> &mdash; About</h2>
+        <p class="forum-subtitle">{{ forum.title }}</p>
+    </div>
+
+    <div class="forum-about-section">
+        <h3>Description</h3>
+        <div class="forum-description-full">
+            {{ forum.description if forum.description else 'No description provided.' }}
+        </div>
+    </div>
+
+    {% if forum.rules %}
+    <div class="forum-about-section">
+        <h3>Rules</h3>
+        <div class="forum-rules">
+            {{ forum.rules }}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="forum-about-section">
+        <h3>Stats</h3>
+        <ul class="forum-stats-list">
+            <li>{{ forum.subscriber_count }} subscriber{{ 's' if forum.subscriber_count != 1 else '' }}</li>
+            <li>{{ forum.post_count }} post{{ 's' if forum.post_count != 1 else '' }}</li>
+        </ul>
+    </div>
+
+    <div class="forum-about-section">
+        <h3>Moderators</h3>
+        {% if moderators %}
+        <ul class="mod-list">
+            {% for mod in moderators %}
+            <li>
+                <a href="/user/{{ mod.username }}">{{ mod.username }}</a>
+                <span class="mod-role">({{ mod.role }})</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No moderators assigned.</p>
+        {% endif %}
+    </div>
+
+    <div class="forum-actions">
+        <a href="/f/{{ forum.name }}/" class="btn btn-sm">&larr; Back to forum</a>
+        {% if can_edit %}
+        <a href="/f/{{ forum.name }}/edit" class="btn btn-sm">Edit Settings</a>
+        <a href="/f/{{ forum.name }}/audit" class="btn btn-sm">Audit Log</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

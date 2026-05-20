@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Tags — {{ site.name }}{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <h2>Tags</h2>
+</div>
+<div class="card">
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+        {% for tag in tags %}
+        <span class="badge" style="background:{{ tag.color }};color:#fff;padding:0.25rem 0.75rem;font-size:0.875rem">
+            {{ tag.name }}
+        </span>
+        {% endfor %}
+    </div>
+    {% if not tags %}
+    <p style="color:#6b7280">No tags yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<h1 style="font-size: 1.3rem; margin-bottom: 1rem;">Register</h1>
+<p class="muted" style="margin-bottom: 1rem;">Password confirmation via cross-field clean(). Username uniqueness checked against DB.</p>
+
+{% if success %}<div class="success">Account created! You can now log in.</div>{% endif %}
+
+<form method="post" style="max-width: 400px;">
+    {{ form.as_div() | safe }}
+    <button type="submit" class="btn" style="margin-top: 0.5rem; width: 100%;">Register</button>
+</form>
+{% endblock %}

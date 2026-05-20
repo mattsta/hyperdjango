@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Org Settings — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>Organization Settings</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+    <div class="card">
+        <h3>General</h3>
+        <table>
+            <tr><td style="font-weight:500">Timezone</td><td>{{ settings.timezone if settings else "UTC" }}</td></tr>
+            <tr><td style="font-weight:500">Assignment Strategy</td><td>{{ settings.auto_assignment_strategy if settings else "round_robin" }}</td></tr>
+        </table>
+    </div>
+    <div class="card">
+        <h3>Usage</h3>
+        <table>
+            <tr><td style="font-weight:500">Total Tickets</td><td>{{ usage.tickets_total }}</td></tr>
+            <tr><td style="font-weight:500">Active Agents</td><td>{{ usage.agents_active }}</td></tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Account - HyperAI{% endblock %}
+
+{% block content %}
+<div class="account-page">
+    <h2>Account Settings</h2>
+
+    <div class="account-section">
+        <h3>Profile</h3>
+        <div class="profile-info">
+            <div class="profile-row">
+                <span class="label">Username</span>
+                <span class="value">{{ user.username }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Email</span>
+                <span class="value">{{ user.email }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Tier</span>
+                <span class="value tier-{{ user.tier }}">{{ user.tier }}</span>
+            </div>
+            <div class="profile-row">
+                <span class="label">Total Requests</span>
+                <span class="value">{{ user.usage_count }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="account-section">
+        <h3>Tier Limits</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Tier</th>
+                    <th>Requests/min</th>
+                    <th>Max Tokens/request</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tier_name, limit in tier_limits.items() %}
+                <tr class="{% if user.tier == tier_name %}active-tier{% endif %}">
+                    <td class="tier-{{ tier_name }}">{{ tier_name }}</td>
+                    <td>{{ limit }}</td>
+                    <td>{{ tier_token_limits[tier_name] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="account-section">
+        <h3>API Keys</h3>
+
+        {% if new_key %}
+        <div class="alert alert-success">
+            <strong>New API key created!</strong> Copy it now &mdash; it will not be shown again.
+            <div class="api-key-display">
+                <code>{{ new_key }}</code>
+            </div>
+        </div>
+        {% endif %}
+
+        <form method="post" action="/api-keys/create" class="api-key-form">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <input type="text" name="name" placeholder="Key name (e.g. 'Production')" required>
+            <button type="submit" class="btn btn-primary">Generate Key</button>
+        </form>
+
+        {% if api_keys %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Key Prefix</th>
+                    <th>Last Used</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key in api_keys %}
+                <tr>
+                    <td>{{ key.name }}</td>
+                    <td><code>{{ key.key_prefix }}...</code></td>
+                    <td>{{ key.last_used if key.last_used else "Never" }}</td>
+                    <td>
+                        <form method="post" action="/api-keys/{{ key.kid }}/revoke"
+                              onsubmit="return confirm('Revoke this key?')">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Revoke</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="muted">No active API keys.</p>
+        {% endif %}
+    </div>
+
+    <div class="account-section">
+        <h3>Recent Usage</h3>
+        {% if usage_logs %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Input Tokens</th>
+                    <th>Output Tokens</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in usage_logs %}
+                <tr>
+                    <td>{{ log.model_name }}</td>
+                    <td>{{ log.input_tokens }}</td>
+                    <td>{{ log.output_tokens }}</td>
+                    <td>${{ "%.4f"|format(log.cost_cents / 10000) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="muted">No usage history yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

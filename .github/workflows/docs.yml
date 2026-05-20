@@ -1,0 +1,65 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      pages_ready: ${{ steps.pages.outcome == 'success' }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+
+      - name: Install Python 3.14t (free-threaded)
+        run: uv python install 3.14t
+
+      - name: Install dependencies
+        run: uv sync
+
+      # Same command as `make docs-build` — local and CI docs builds are
+      # identical by construction.
+      - name: Build site
+        run: uv run --with mkdocs-material mkdocs build
+
+      # Configure Pages may fail if Pages isn't enabled on the repo (one-time
+      # manual setup in Settings → Pages → Source: GitHub Actions). On private
+      # repos, Pages also requires a paid plan. Don't fail the workflow over
+      # this — the build still validated that docs render correctly.
+      - id: pages
+        uses: actions/configure-pages@v6
+        continue-on-error: true
+
+      - uses: actions/upload-pages-artifact@v5
+        if: steps.pages.outcome == 'success'
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.pages_ready == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v5
+        id: deployment

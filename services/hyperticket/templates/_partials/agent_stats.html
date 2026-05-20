@@ -1,0 +1,12 @@
+<table>
+    <thead><tr><th>Agent</th><th>Assigned</th><th>Resolved</th></tr></thead>
+    <tbody>
+        {% for a in agents %}
+        <tr>
+            <td>{{ a.display_name }}</td>
+            <td>{{ a.assigned_tickets }}</td>
+            <td>{{ a.resolved }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

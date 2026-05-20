@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}API Keys — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>API Keys</h2>
+<div class="card">
+    <form method="post" action="/admin/api-keys/new" style="display:flex;gap:0.5rem;margin-bottom:1rem">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <input type="text" name="name" placeholder="Key name (e.g. CI/CD)" required style="flex:1;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px">
+        <button type="submit" class="btn btn-primary">Generate Key</button>
+    </form>
+    {% if api_keys %}
+    <table>
+        <thead><tr><th>Name</th><th>Prefix</th><th>Active</th><th>Created</th><th></th></tr></thead>
+        <tbody>
+            {% for k in api_keys %}
+            <tr>
+                <td>{{ k.name }}</td>
+                <td><code>{{ k.key_prefix }}...</code></td>
+                <td>{{ "Yes" if k.is_active else "Revoked" }}</td>
+                <td>{{ time_ago(k.created_at) }}</td>
+                <td>
+                    {% if k.is_active %}
+                    <form method="post" action="/admin/api-keys/{{ k.id }}/revoke" style="display:inline">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.5rem;font-size:0.75rem">Revoke</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:#6b7280">No API keys.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Revision History — {{ post.title }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Revision History: <a href="/post/{{ post.pid }}">{{ post.title }}</a></h2>
+
+    {% if revisions %}
+    <div class="revision-list">
+        {% for revision in revisions %}
+        <div class="revision-item">
+            <div class="post-meta">
+                Edited by <a href="/user/{{ revision.editor }}">{{ revision.editor }}</a>
+                <span class="post-time">{{ revision.created_at }}</span>
+                {% if revision.reason %}
+                — <em>{{ revision.reason }}</em>
+                {% endif %}
+            </div>
+            {% if revision.title %}
+            <h3>{{ revision.title }}</h3>
+            {% endif %}
+            {% if revision.text %}
+            <div class="post-text">{{ revision.text }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">No revisions recorded for this post.</p>
+    {% endif %}
+
+    <p><a href="/post/{{ post.pid }}" class="btn btn-sm btn-outline">Back to Post</a></p>
+</div>
+{% endblock %}

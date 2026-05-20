@@ -1,0 +1,80 @@
+name: Setup PostgreSQL
+description: >
+  Single authority for the CI database: native PostgreSQL 18 + pgvector on
+  any runner — no containers, no Docker, so every platform (Linux x86/arm,
+  macOS) gets the identical database environment. Ends with a superuser
+  "runner" role (some test scripts derive their PG user from $USER), a
+  "postgres" role, and an empty hyperdjango_test database, listening on
+  localhost:5432 with trust auth and max_connections=1000 (the full
+  parallel suite peaks around 400 connections).
+
+runs:
+  using: composite
+  steps:
+    - name: Install PostgreSQL 18 + pgvector (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        set -euo pipefail
+        sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+        curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+        sudo apt-get update -qq
+        # contrib modules (pg_trgm, hstore) ship inside postgresql-18 since
+        # the PG14 packaging merge; pgvector is the only extra binary.
+        sudo apt-get install -y postgresql-18 postgresql-client-18 postgresql-18-pgvector
+        # Deterministic single cluster on 5432: the runner image ships an
+        # older cluster and the fresh package auto-creates one on whatever
+        # port is free. Drop them all, create exactly one.
+        while read -r ver name; do
+          sudo pg_dropcluster --stop "$ver" "$name" || true
+        done < <(pg_lsclusters -h | awk '{print $1" "$2}')
+        sudo pg_createcluster 18 main --port 5432 -- --auth=trust
+        echo "max_connections = 1000" | sudo tee /etc/postgresql/18/main/conf.d/ci.conf
+        sudo pg_ctlcluster 18 main start
+
+    - name: Install PostgreSQL 18 + pgvector (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      env:
+        # Silence Homebrew's chatty env hints in the CI log.
+        HOMEBREW_NO_ENV_HINTS: "1"
+      run: |
+        set -euo pipefail
+        # The macOS runner image ships an untrusted third-party tap (aws/tap);
+        # Homebrew prints a "taps are not trusted" banner on every invocation
+        # while it is present. We never use it — drop it so the log stays clean.
+        # Harmless if absent.
+        brew untap aws/tap 2>/dev/null || true
+        brew install postgresql@18
+        PREFIX="$(brew --prefix postgresql@18)"
+        echo "$PREFIX/bin" >> "$GITHUB_PATH"
+        export PATH="$PREFIX/bin:$PATH"
+        PGDATA="$RUNNER_TEMP/pgdata"
+        initdb --auth=trust -U postgres -D "$PGDATA"
+        echo "max_connections = 1000" >> "$PGDATA/postgresql.conf"
+        pg_ctl -D "$PGDATA" -l "$RUNNER_TEMP/pg.log" -o "-p 5432 -c listen_addresses=localhost" start
+        # Build pgvector against THIS server's pg_config — the brew bottle
+        # is compiled for whichever postgresql@N its formula pins, which
+        # need not match ours. Version pin mirrors what the test suite has
+        # been validated against; bump deliberately.
+        git clone --depth 1 --branch v0.8.5 https://github.com/pgvector/pgvector "$RUNNER_TEMP/pgvector"
+        make -C "$RUNNER_TEMP/pgvector" PG_CONFIG="$PREFIX/bin/pg_config"
+        make -C "$RUNNER_TEMP/pgvector" PG_CONFIG="$PREFIX/bin/pg_config" install
+
+    - name: Create roles + database
+      shell: bash
+      run: |
+        set -euo pipefail
+        for i in $(seq 1 30); do
+          pg_isready -h localhost -p 5432 >/dev/null && break
+          sleep 1
+        done
+        pg_isready -h localhost -p 5432
+        # Superuser role matching the runner OS user: 20+ test scripts
+        # compute their PG user as PGUSER || USER, which resolves to
+        # "runner" on GHA. Trust auth is CI-only; the server is private to
+        # the job.
+        psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -c \
+          "DO \$\$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname='runner') THEN CREATE ROLE runner LOGIN SUPERUSER; END IF; END \$\$;"
+        createdb -h localhost -U postgres hyperdjango_test
+        psql -h localhost -U postgres -d hyperdjango_test -c "SELECT version();"

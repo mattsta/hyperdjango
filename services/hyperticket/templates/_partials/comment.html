@@ -1,0 +1,8 @@
+<div style="padding:0.75rem 0;border-bottom:1px solid #e5e7eb{% if comment.is_internal %};background:#fffbeb{% endif %}">
+    <div style="font-size:0.75rem;color:#6b7280">
+        {{ comment.author_type }} #{{ comment.author_id }}
+        {% if comment.is_internal %}<span class="badge" style="background:#f59e0b;color:#fff">Internal</span>{% endif %}
+        — {{ time_ago(comment.created_at) }}
+    </div>
+    <div style="margin-top:0.25rem">{{ comment.body }}</div>
+</div>

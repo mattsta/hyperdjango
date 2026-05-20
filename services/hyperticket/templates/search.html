@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Search — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>Search</h2>
+<div class="card">
+    <form method="get" action="/search/">
+        <div style="display:flex;gap:0.5rem">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search tickets and comments..." style="flex:1;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+</div>
+
+{% if query %}
+<div class="card" style="margin-top:1rem">
+    <h3>Tickets ({{ tickets | length }})</h3>
+    {% if tickets %}
+    <table>
+        <thead><tr><th>#</th><th>Title</th><th>Relevance</th></tr></thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td><a href="/tickets/{{ t.id }}">{{ t.ticket_number }}</a></td>
+                <td>
+                    <a href="/tickets/{{ t.id }}">{{ t.title }}</a>
+                    {% if t.snippet %}<div style="font-size:0.75rem;color:#6b7280;margin-top:0.25rem">{{ t.snippet }}</div>{% endif %}
+                </td>
+                <td>{{ t.rank }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:#6b7280">No tickets found.</p>
+    {% endif %}
+</div>
+
+{% if comments %}
+<div class="card" style="margin-top:1rem">
+    <h3>Comments ({{ comments | length }})</h3>
+    <table>
+        <thead><tr><th>Ticket</th><th>Comment</th><th>By</th></tr></thead>
+        <tbody>
+            {% for c in comments %}
+            <tr>
+                <td><a href="/tickets/{{ c.ticket_id }}">{{ c.ticket_number }}</a></td>
+                <td>{{ c.body_snippet }}</td>
+                <td>{{ c.author_type }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

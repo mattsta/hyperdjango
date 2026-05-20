@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Mod Panel — /f/{{ forum.name }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="forum-page">
+    <div class="forum-header">
+        <h2><a href="/f/{{ forum.name }}/">f/{{ forum.name }}</a> &mdash; Mod Panel</h2>
+        <p class="forum-subtitle">{{ forum.title }}</p>
+    </div>
+
+    <div class="forum-about-section">
+        <h3>Stats</h3>
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-value">{{ stats.member_count }}</span>
+                <span class="stat-label">Members</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ stats.post_count }}</span>
+                <span class="stat-label">Posts</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ stats.recent_reports_count }}</span>
+                <span class="stat-label">Recent Reports</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ stats.active_automod_count }}</span>
+                <span class="stat-label">Active Automod Rules</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="forum-about-section">
+        <h3>Recent Mod Actions</h3>
+        {% if recent_actions %}
+        <ul class="forum-stats-list">
+            {% for action in recent_actions %}
+            <li>
+                <span class="post-meta">{{ action.created_at }}</span>
+                &mdash;
+                <a href="/user/{{ action.actor_name }}">{{ action.actor_name }}</a>:
+                {{ action.action }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">No recent mod actions.</p>
+        {% endif %}
+    </div>
+
+    <div class="forum-about-section">
+        <h3>Quick Links</h3>
+        <div class="forum-actions">
+            <a href="/f/{{ forum.name }}/edit" class="btn btn-sm btn-outline">Edit Forum</a>
+            <a href="/f/{{ forum.name }}/members" class="btn btn-sm btn-outline">Members</a>
+            <a href="/f/{{ forum.name }}/automod" class="btn btn-sm btn-outline">Automod Rules</a>
+            <a href="/f/{{ forum.name }}/audit" class="btn btn-sm btn-outline">Audit Log</a>
+            <a href="/f/{{ forum.name }}/about" class="btn btn-sm btn-outline">Forum About</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+<div class="message message-{{ msg.role }}">
+    <div class="message-header">
+        <span class="message-role">
+            {% if msg.role == "user" %}You{% elif msg.role == "assistant" %}Assistant{% else %}System{% endif %}
+        </span>
+    </div>
+    <div class="message-content">{{ msg.content }}</div>
+    {% if msg.token_count %}
+    <div class="message-tokens">{{ msg.token_count }} tokens</div>
+    {% endif %}
+</div>

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Profile Settings — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Profile Settings</h2>
+
+    {% if success %}
+    <div class="success-box">
+        <p>{{ success }}</p>
+    </div>
+    {% endif %}
+
+    <form method="post" action="/settings/profile" class="account-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <fieldset>
+            <legend>Basic Info</legend>
+            <div class="form-group">
+                <label for="display_name">Display Name</label>
+                <input type="text" id="display_name" name="display_name"
+                       value="{{ account.display_name }}" maxlength="60">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"
+                       value="{{ account.email }}">
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" rows="4">{{ account.bio }}</textarea>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Extended Profile</legend>
+            <div class="form-group">
+                <label for="website">Website</label>
+                <input type="url" id="website" name="website"
+                       value="{{ account.website }}" placeholder="https://example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location"
+                       value="{{ account.location }}" placeholder="City, Country">
+            </div>
+
+            <div class="form-group">
+                <label for="avatar_url">Avatar URL</label>
+                <input type="url" id="avatar_url" name="avatar_url"
+                       value="{{ account.avatar_url }}" placeholder="https://example.com/avatar.jpg">
+            </div>
+
+            <div class="form-group">
+                <label for="github_username">GitHub Username</label>
+                <input type="text" id="github_username" name="github_username"
+                       value="{{ account.github_username }}" placeholder="username">
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Save Profile</button>
+        <a href="/account" class="btn btn-sm btn-outline">Account &amp; Password</a>
+    </form>
+</div>
+{% endblock %}

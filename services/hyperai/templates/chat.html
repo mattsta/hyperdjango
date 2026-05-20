@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}{{ conversation.title }} - HyperAI{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="chat-header">
+        <div class="chat-header-info">
+            <h2>{{ conversation.title }}</h2>
+            <span class="chat-model">{{ conversation.model_name }}</span>
+        </div>
+        <div class="chat-header-actions">
+            <details class="system-prompt-toggle">
+                <summary>System Prompt</summary>
+                <div class="system-prompt-content">{{ conversation.system_prompt }}</div>
+            </details>
+            <form method="post" action="/chat/{{ conversation.cid }}/delete"
+                  onsubmit="return confirm('Delete this conversation?')">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="messages-container" id="messages">
+        {% for msg in messages %}
+        {% include "_partials/message.html" %}
+        {% endfor %}
+        <div id="streaming-target"></div>
+    </div>
+
+    <div class="chat-input-area">
+        <form id="chat-form" class="chat-form">
+            <textarea
+                id="message-input"
+                name="content"
+                placeholder="Type your message..."
+                rows="1"
+                autofocus
+            ></textarea>
+            <button type="submit" class="btn btn-send" id="send-btn">
+                <span class="send-icon">&#9654;</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function() {
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('message-input');
+    const messagesContainer = document.getElementById('messages');
+    const streamingTarget = document.getElementById('streaming-target');
+    const sendBtn = document.getElementById('send-btn');
+
+    // Auto-resize textarea
+    input.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+    });
+
+    // Submit on Enter (Shift+Enter for newline)
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            form.dispatchEvent(new Event('submit'));
+        }
+    });
+
+    function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const content = input.value.trim();
+        if (!content) return;
+
+        // Disable input while streaming
+        input.disabled = true;
+        sendBtn.disabled = true;
+
+        // Add user message to the UI
+        const userBubble = document.createElement('div');
+        userBubble.className = 'message message-user';
+        userBubble.innerHTML = `
+            <div class="message-header">
+                <span class="message-role">You</span>
+            </div>
+            <div class="message-content">${escapeHtml(content)}</div>
+        `;
+        messagesContainer.insertBefore(userBubble, streamingTarget);
+
+        // Add assistant streaming bubble
+        const assistantBubble = document.createElement('div');
+        assistantBubble.className = 'message message-assistant';
+        assistantBubble.innerHTML = `
+            <div class="message-header">
+                <span class="message-role">Assistant</span>
+            </div>
+            <div class="message-content" id="streaming-content">
+                <span class="typing-cursor"></span>
+            </div>
+        `;
+        messagesContainer.insertBefore(assistantBubble, streamingTarget);
+        scrollToBottom();
+
+        const streamContent = document.getElementById('streaming-content');
+        input.value = '';
+        input.style.height = 'auto';
+
+        // POST and stream SSE response
+        const formData = new FormData();
+        formData.append('content', content);
+
+        // CSRF token from cookie (double-submit pattern)
+        const csrfToken = document.cookie.split('; ')
+            .find(c => c.startsWith('csrftoken='))?.split('=')[1] || '';
+
+        try {
+            const response = await fetch('/chat/{{ conversation.cid }}/send', {
+                method: 'POST',
+                body: formData,
+                headers: {'X-CSRFToken': csrfToken},
+            });
+
+            if (!response.ok) {
+                const errBody = await response.text();
+                let detail = response.status === 429 ? 'Rate limit exceeded — please wait'
+                    : response.status === 401 ? 'Session expired — please log in again'
+                    : 'Server error (' + response.status + ')';
+                try { detail = JSON.parse(errBody).detail || detail; } catch(_) {}
+                throw new Error(detail);
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = '';
+            let fullText = '';
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+                buffer = lines.pop();
+
+                for (const line of lines) {
+                    if (!line.startsWith('data: ')) continue;
+                    const dataStr = line.slice(6);
+                    if (dataStr === '[DONE]') continue;
+
+                    try {
+                        const data = JSON.parse(dataStr);
+                        if (data.token) {
+                            fullText += data.token;
+                            streamContent.innerHTML = formatMarkdown(fullText) +
+                                '<span class="typing-cursor"></span>';
+                            scrollToBottom();
+                        }
+                        if (data.done) {
+                            streamContent.innerHTML = formatMarkdown(fullText);
+                            const tokenInfo = document.createElement('div');
+                            tokenInfo.className = 'message-tokens';
+                            tokenInfo.textContent = data.token_count + ' tokens';
+                            assistantBubble.appendChild(tokenInfo);
+                        }
+                    } catch (parseErr) {
+                        // Skip malformed events
+                    }
+                }
+            }
+        } catch (err) {
+            let errorMsg = 'Failed to get response';
+            if (err.message) errorMsg = err.message;
+            if (err.name === 'AbortError') errorMsg = 'Request timed out';
+            streamContent.innerHTML = '<em class="error">Error: ' + escapeHtml(errorMsg) +
+                '</em><br><button onclick="location.reload()" style="margin-top:8px;padding:4px 12px;">Retry</button>';
+        }
+
+        // Re-enable input
+        streamContent.removeAttribute('id');
+        input.disabled = false;
+        sendBtn.disabled = false;
+        input.focus();
+        scrollToBottom();
+    });
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function formatMarkdown(text) {
+        // Escape HTML FIRST to prevent XSS, then apply markdown formatting
+        text = escapeHtml(text);
+        // Code blocks (using escaped backticks)
+        text = text.replace(/```(\w*)\n([\s\S]*?)```/g,
+            '<pre><code class="language-$1">$2</code></pre>');
+        // Inline code
+        text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+        // Bold
+        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        // Italic
+        text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        // Line breaks
+        text = text.replace(/\n/g, '<br>');
+        return text;
+    }
+
+    scrollToBottom();
+})();
+</script>
+{% endblock %}

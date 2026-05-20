@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}New Ticket{% endblock %}
+{% block content %}
+<h1 style="font-size: 1.3rem; margin-bottom: 1rem;">Submit Ticket (ModelForm)</h1>
+<p class="muted" style="margin-bottom: 1rem;">Auto-generated from Ticket model. Enum fields become ChoiceField dropdowns.</p>
+
+{% if success %}<div class="success">Ticket #{{ ticket_id }} created!</div>{% endif %}
+
+<form method="post" style="max-width: 500px;">
+    {{ form.as_div() | safe }}
+    <button type="submit" class="btn" style="margin-top: 0.5rem;">Create Ticket</button>
+    <a href="/tickets" style="margin-left: 1rem;">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Create Sequence — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Create a Sequence</h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" action="/sequences" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" maxlength="200" required placeholder="Sequence title">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description <span class="optional">(optional)</span></label>
+            <textarea id="description" name="description" rows="4" placeholder="What is this sequence about?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Sequence</button>
+    </form>
+</div>
+{% endblock %}

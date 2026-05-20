@@ -1,0 +1,96 @@
+name: Setup toolchain
+description: >
+  Single authority for the build toolchain used by every job that compiles or
+  runs hyperdjango: pinned Zig (with SHA verification), uv, free-threaded
+  Python, project dependencies, the native extension build, and an import
+  smoke-check. CI and Release must consume this action instead of inlining
+  any of these steps — that is what keeps their toolchains identical.
+
+inputs:
+  build-native:
+    description: Build + install the native Zig extension and verify it imports
+    required: false
+    default: "true"
+  build-mode:
+    description: >
+      Native optimize mode: "release" (ReleaseFast, production), "safe"
+      (ReleaseSafe — keeps Zig bounds/overflow/UB checks at ~production speed),
+      or "debug" (Debug — every safety check, slowest). The progressive CI
+      ladder builds the same sources under increasing safety.
+    required: false
+    default: "release"
+  heap-safety:
+    description: >
+      "true" swaps the raw c_allocator for Zig's safety-checking DebugAllocator
+      on the pool/db path (double-free / use-after-free / out-of-bounds
+      detection — the class that surfaces remotely as glibc "double free or
+      corruption"). Composes with build-mode. Slower; for the sanitized tier.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Install Zig
+      shell: bash
+      run: |
+        set -euo pipefail
+        ZIG_VERSION=0.16.0
+        case "$(uname -sm)" in
+          "Linux x86_64")  ARCH=x86_64-linux;  SHA=70e49664a74374b48b51e6f3fdfbf437f6395d42509050588bd49abe52ba3d00 ;;
+          "Linux aarch64") ARCH=aarch64-linux; SHA=ea4b09bfb22ec6f6c6ceac57ab63efb6b46e17ab08d21f69f3a48b38e1534f17 ;;
+          "Darwin arm64")  ARCH=aarch64-macos; SHA=b23d70deaa879b5c2d486ed3316f7eaa53e84acf6fc9cc747de152450d401489 ;;
+          *) echo "Unsupported platform: $(uname -sm)" >&2; exit 1 ;;
+        esac
+        URL="https://ziglang.org/download/${ZIG_VERSION}/zig-${ARCH}-${ZIG_VERSION}.tar.xz"
+        curl -fsSL "$URL" -o /tmp/zig.tar.xz
+        echo "${SHA}  /tmp/zig.tar.xz" | shasum -a 256 -c -
+        mkdir -p "$HOME/.zig"
+        tar -xJf /tmp/zig.tar.xz -C "$HOME/.zig" --strip-components=1
+        echo "$HOME/.zig" >> "$GITHUB_PATH"
+        "$HOME/.zig/zig" version
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v8.1.0
+
+    - name: Install Python 3.14t (free-threaded)
+      shell: bash
+      run: uv python install 3.14t
+
+    - name: Install dependencies
+      shell: bash
+      run: uv sync
+
+    - name: Build native extension
+      if: inputs.build-native == 'true'
+      shell: bash
+      run: |
+        set -euo pipefail
+        case "${{ inputs.build-mode }}" in
+          release) flag=--release ;;
+          safe)    flag=--safe ;;
+          debug)   flag=--debug ;;
+          *) echo "unknown build-mode '${{ inputs.build-mode }}'" >&2; exit 1 ;;
+        esac
+        extra=""
+        if [ "${{ inputs.heap-safety }}" = "true" ]; then extra=--heap-safety; fi
+        echo "Building native extension: $flag $extra"
+        uv run python zig/build_hyperdjango.py --install "$flag" $extra
+
+    - name: Verify native extension loads
+      if: inputs.build-native == 'true'
+      shell: bash
+      run: |
+        set +e
+        uv run python -X faulthandler -c "from hyperdjango._hyperdjango_native import hello; print(hello())"
+        rc=$?
+        if [ $rc -ne 0 ] && [ "$RUNNER_OS" = "macOS" ]; then
+          echo "=== retry with DYLD diagnostics ==="
+          DYLD_PRINT_LIBRARIES=1 DYLD_PRINT_APIS=1 uv run python -X faulthandler -c "from hyperdjango._hyperdjango_native import hello; print(hello())" 2>&1 | tail -100 || true
+          echo "=== binary forensics ==="
+          sw_vers
+          ls -la hyperdjango/*.so 2>&1 || true
+          otool -L hyperdjango/_hyperdjango_native.cpython-314t-darwin.so || true
+          codesign -dv hyperdjango/_hyperdjango_native.cpython-314t-darwin.so 2>&1 || true
+        fi
+        exit $rc

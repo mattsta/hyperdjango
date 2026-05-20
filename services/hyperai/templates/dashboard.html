@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - HyperAI{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="dashboard-header">
+        <h2>Welcome back, {{ user.username }}</h2>
+        <a href="/chat/new" class="btn btn-primary">Start New Chat</a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">{{ total_conversations }}</div>
+            <div class="stat-label">Conversations</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ total_messages }}</div>
+            <div class="stat-label">Messages</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ total_tokens }}</div>
+            <div class="stat-label">Tokens Used</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value tier-{{ user.tier }}">{{ user.tier }}</div>
+            <div class="stat-label">Current Tier</div>
+        </div>
+    </div>
+
+    <div class="recent-section">
+        <h3>Recent Conversations</h3>
+        {% if conversations %}
+        <div class="conversation-cards">
+            {% for conv in conversations %}
+            <a href="/chat/{{ conv.cid }}" class="conversation-card">
+                <div class="card-title">{{ conv.title }}</div>
+                <div class="card-meta">
+                    <span class="card-model">{{ conv.model_name }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>No conversations yet. Start a new chat to get going!</p>
+            <a href="/chat/new" class="btn btn-primary">New Chat</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

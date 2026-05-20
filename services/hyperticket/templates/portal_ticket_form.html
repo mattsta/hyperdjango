@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}New Request — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px">
+    <h2>Submit a Request</h2>
+    {% if errors %}
+    <div class="errors"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>
+    {% endif %}
+    <form method="post" action="/portal/tickets/new">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <div class="form-group">
+            <label for="title">Subject</label>
+            <input type="text" id="title" name="title" required maxlength="300">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required maxlength="10000" placeholder="Describe your issue..."></textarea>
+        </div>
+        <div class="form-group">
+            <label for="ticket_type_id">Category</label>
+            <select id="ticket_type_id" name="ticket_type_id" required>
+                {% for t in types %}<option value="{{ t.id }}">{{ t.label }}</option>{% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

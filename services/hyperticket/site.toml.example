@@ -1,0 +1,36 @@
+# HyperTicket Site Configuration
+# Copy to site.toml and customize. All values are optional —
+# defaults match the standard HyperTicket appearance.
+#
+# Environment variables override TOML values:
+#   HYPERTICKET_NAME="Acme Support" HYPERTICKET_THEME_PRIMARY="#3b82f6"
+
+name = "HyperTicket"
+# tagline = "Fast, reliable support"
+# logo_url = "/static/logo.png"
+footer_text = "Powered by HyperDjango"
+font_family = "Inter, system-ui, sans-serif"
+base_font_size = "14px"
+
+[theme]
+primary = "#1a73e8"
+primary_dark = "#1557b0"
+background = "#f8f9fa"
+text = "#202124"
+text_secondary = "#6b7280"
+success = "#22c55e"
+warning = "#f59e0b"
+danger = "#dc2626"
+header_bg = "#1a73e8"
+header_text = "#ffffff"
+
+[portal_labels]
+welcome_message = "Welcome to the Support Portal"
+submit_label = "Submit a Request"
+empty_tickets = "You have no open requests."
+
+[dashboard_labels]
+total_tickets = "Total Tickets"
+open_tickets = "Open Tickets"
+unassigned = "Unassigned"
+sla_compliance = "SLA Compliance"

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ site.name }}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    {% if site_css %}<style>{{ site_css }}</style>{% endif %}
+    <script src="/static/htmx.min.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-bar">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <span class="logo-icon">{{ site.logo_icon }}</span>
+                    <span class="logo-text">{{ site.name }}</span>
+                </a>
+                {% for nav in site.nav_items %}<a href="{{ nav.url }}" class="nav-link">{{ nav.label }}</a>
+                {% endfor %}
+            </div>
+            <div class="nav-right">
+                {% if user %}
+                    <a href="/user/{{ user.username }}" class="nav-link">{{ user.username }}</a>
+                    <span class="nav-sep">|</span>
+                    <a href="/inbox" class="nav-link">inbox
+                        <span id="inbox-badge" hx-get="/inbox/count" hx-trigger="load, every 30s"
+                              hx-swap="innerHTML" hx-target="#inbox-badge"></span>
+                    </a>
+                    <span class="nav-sep">|</span>
+                    <a href="/saved" class="nav-link">saved</a>
+                    <span class="nav-sep">|</span>
+                    <a href="/account" class="nav-link">settings</a>
+                    <span class="nav-sep">|</span>
+                    <form method="post" action="/logout" style="display:inline">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="nav-link-btn">logout</button>
+                    </form>
+                {% else %}
+                    <a href="/login" class="nav-link">login</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            {% for link in site.footer_links %}<a href="{{ link.url }}">{{ link.label }}</a>{% if not loop.last %} | {% endif %}{% endfor %}
+            <p class="footer-powered">{{ site.footer_text }}</p>
+        </div>
+    </footer>
+</body>
+</html>

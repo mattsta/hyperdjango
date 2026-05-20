@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Flair — f/{{ forum.name }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Flair in <a href="/f/{{ forum.name }}/">f/{{ forum.name }}</a></h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h3>Your Flair</h3>
+    <form method="post" action="/f/{{ forum.name }}/flair" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="flair_text">Flair Text</label>
+            <input type="text" id="flair_text" name="flair_text" maxlength="64"
+                   value="{{ user_flair.text if user_flair else '' }}"
+                   placeholder="Your flair text">
+        </div>
+
+        <div class="form-group">
+            <label for="css_class">Style</label>
+            <select id="css_class" name="css_class">
+                <option value="" {% if not user_flair or not user_flair.css_class %}selected{% endif %}>Default</option>
+                <option value="verified" {% if user_flair and user_flair.css_class == 'verified' %}selected{% endif %}>Verified</option>
+                <option value="contributor" {% if user_flair and user_flair.css_class == 'contributor' %}selected{% endif %}>Contributor</option>
+                <option value="patron" {% if user_flair and user_flair.css_class == 'patron' %}selected{% endif %}>Patron</option>
+                <option value="custom" {% if user_flair and user_flair.css_class == 'custom' %}selected{% endif %}>Custom</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Flair</button>
+    </form>
+
+    {% if is_mod %}
+    <h3>Manage Flairs</h3>
+
+    {% if all_flairs %}
+    <table class="flair-table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Flair</th>
+                <th>Style</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flair in all_flairs %}
+            <tr>
+                <td><a href="/user/{{ flair.username }}">{{ flair.username }}</a></td>
+                <td><span class="flair flair-{{ flair.css_class }}">{{ flair.text }}</span></td>
+                <td>{{ flair.css_class if flair.css_class else 'default' }}</td>
+                <td>
+                    <button hx-post="/f/{{ forum.name }}/flair/{{ flair.id }}/remove"
+                            hx-vals='{"_csrf_token": "{{ csrf_token }}"}'
+                            hx-target="closest tr"
+                            hx-swap="outerHTML"
+                            class="btn btn-sm btn-outline">Remove</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">No flairs assigned yet.</p>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

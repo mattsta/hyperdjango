@@ -1,0 +1,55 @@
+H3 — A Hexagonal Hierarchical Geospatial Indexing System
+
+Original work:
+    Copyright 2017-2021 Uber Technologies, Inc.
+    Licensed under the Apache License, Version 2.0.
+
+This project began at Uber Technologies, Inc. ("Uber"), which authored
+the original H3 codebase under the Apache License, Version 2.0. The
+upstream Uber repository — github.com/uber/h3 — remains the source of
+the foundational design, the original C library implementation, and the
+language-binding ecosystem (h3-java, h3-js, h3-py, etc.).
+
+
+Forked work and current maintainership:
+    Copyright (c) 2026 Matt Stancliff (mattsta)
+    Licensed under the Sovereign Individual's Covenant License, v1.0
+    (see LICENSE-mattsta in the repository root).
+
+As of Sunday, April 26, 2026, this repository became the new primary
+maintained version of H3 under mattsta. All commits dated 2026-04-26 and
+later — including all new files, all modifications to pre-fork files,
+all optimizations, all SIMD kernels, all tooling under scripts/, and the
+architectural choices embodied in the post-fork additions — are the
+property of Matt Stancliff and are licensed under the Sovereign
+Individual's Covenant License (LICENSE-mattsta), NOT under Apache 2.0.
+
+The covenant license grants rights to natural-person Individuals only
+and prohibits use by corporate entities of essentially every form. It
+is materially more restrictive than Apache 2.0. Downstream users — and
+in particular any corporate downstream — must read LICENSE-mattsta in
+full before assuming what they may do with this code.
+
+
+Pre-fork (Uber, Apache-2.0) material is preserved
+    The Uber attribution above is preserved for the portions of this
+    codebase authored at Uber prior to the fork date. That material
+    remains subject to the original Uber copyright and the Apache
+    License, Version 2.0, as the Apache license requires for
+    distribution of derivative works. Per-file headers in pre-fork
+    files retain the original Uber attribution. Modifications made to
+    those files on or after 2026-04-26 are covenant-licensed work; the
+    underlying pre-fork lines remain Apache-2.0.
+
+New files added under mattsta carry no per-file copyright header and
+are covered solely by this NOTICE, the LICENSE file, and LICENSE-mattsta.
+
+
+Summary
+    Pre-fork material:    Apache License, Version 2.0
+                          See LICENSE for the full text.
+    Post-fork material:   Sovereign Individual's Covenant License, v1.0
+                          See LICENSE-mattsta for the full text.
+
+The LICENSE file at the repository root opens with a "Dual License
+Notice" that maps the boundaries; read that first.

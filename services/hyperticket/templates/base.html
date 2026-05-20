@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ site.name }}{% endblock %}</title>
+    <script src="/static/htmx.min.js"></script>
+    {% if site_css %}<style>{{ site_css }}</style>{% endif %}
+    {% if theme_css %}<style>{{ theme_css }}</style>{% endif %}
+    {% if custom_css %}<style>{{ custom_css }}</style>{% endif %}
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-family, Inter, system-ui, sans-serif); color: var(--text-color, #202124); background: var(--bg-color, #f8f9fa); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        header { background: var(--header-bg, #1a73e8); color: var(--header-text, #fff); padding: 0.75rem 0; }
+        header a { color: var(--header-text, #fff); text-decoration: none; margin-right: 1rem; }
+        header .nav { display: flex; align-items: center; justify-content: space-between; }
+        header .brand { font-weight: 700; font-size: 1.1rem; }
+        main { padding: 1.5rem 0; }
+        .card { background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .btn { display: inline-block; padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-size: 0.875rem; text-decoration: none; }
+        .btn-primary { background: #1a73e8; color: #fff; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .btn-secondary { background: #e5e7eb; color: #374151; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.25rem; font-weight: 500; font-size: 0.875rem; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.875rem; }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: #6b7280; }
+        .badge { display: inline-block; padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
+        .errors { background: #fef2f2; border: 1px solid #fca5a5; color: #dc2626; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; }
+        .errors li { margin-left: 1rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav">
+            <div>
+                {% if logo_url %}<img src="{{ logo_url }}" alt="" style="height:24px;margin-right:0.5rem;vertical-align:middle">{% endif %}
+                <a href="{% if is_agent %}/dashboard/{% elif is_customer %}/portal/{% else %}/auth/agent/login{% endif %}" class="brand">{{ site.name }}</a>
+                {% if is_agent %}
+                    <a href="/dashboard/">Dashboard</a>
+                    <a href="/tickets/">Tickets</a>
+                    <a href="/search/">Search</a>
+                    <a href="/teams/">Teams</a>
+                    <a href="/tags/">Tags</a>
+                    {% if user.role == "admin" %}<a href="/agents/">Agents</a>
+                    <a href="/admin/settings/">Settings</a>{% endif %}
+                    <a href="/admin/">Admin</a>
+                {% elif is_customer %}
+                    <a href="/portal/tickets/">My Tickets</a>
+                    <a href="/portal/tickets/new">New Ticket</a>
+                {% endif %}
+            </div>
+            <div>
+                {% if user.email %}
+                    <span>{{ user.display_name or user.email }}</span>
+                    <form method="post" action="{% if is_agent %}/auth/agent/logout{% else %}/auth/customer/logout{% endif %}" style="display:inline">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-secondary" style="margin-left:0.5rem;padding:0.25rem 0.5rem;font-size:0.75rem">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="/auth/agent/login">Agent Login</a>
+                    <a href="/auth/customer/login">Customer Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

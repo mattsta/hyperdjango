@@ -1,0 +1,76 @@
+name: Run test suite
+description: >
+  Provision PostgreSQL, gate on environment diagnostics, and run the full
+  hyperdjango test suite against whatever native build the toolchain already
+  installed. Factored out so every rung of the progressive ladder (ReleaseSafe
+  gate, ReleaseFast production, and any deeper instrumented tier) runs the
+  IDENTICAL suite and only the build mode differs — no per-tier drift.
+
+inputs:
+  artifact-suffix:
+    description: Suffix for the failure-log artifact name (keep unique per job)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: PostgreSQL 18 + pgvector
+      uses: ./.github/actions/setup-postgres
+
+    # Enable every extension declared in hyperdjango.db_extensions.REGISTRY.
+    # template1 first — createdb clones template1, so every per-test isolated
+    # DB the runner creates later inherits the extensions; hyperdjango_test was
+    # created before this step, so gets them applied directly. Single source of
+    # truth: a feature needing a new extension updates db_extensions.py and CI
+    # picks it up with no workflow change.
+    - name: Ensure required PostgreSQL extensions
+      shell: bash
+      run: |
+        DATABASE_URL=postgres://postgres@localhost:5432/template1 \
+          uv run hyper db extensions ensure
+        DATABASE_URL=postgres://postgres@localhost:5432/hyperdjango_test \
+          uv run hyper db extensions ensure
+
+    # `hyper doctor --ci` hard-fails on ANY non-PASS security check (by design).
+    # Give the gate the production-shaped config a real deployment would have.
+    # CI-only throwaway values; the secrets guard nothing here (checks require
+    # >= 32 chars). Scoped to THIS step — never exported job-wide, so it can't
+    # leak into the test subprocesses (the runner controls their DB env).
+    - name: Doctor gate (environment diagnostics)
+      shell: bash
+      env:
+        # Explicit DB selection, step-scoped: job-level PGDATABASE is banned
+        # (check_ci_env_contract) because it leaks into test subprocesses;
+        # doctor still needs to know which database to diagnose.
+        DATABASE_URL: postgres://postgres@localhost:5432/hyperdjango_test
+        HYPER_SECRET_KEY: ci-only-secret-key-0123456789abcdef0123456789
+        HYPER_CSRF_SECRET: ci-only-csrf-secret-0123456789abcdef01234567
+        HYPER_SESSION_SECRET: ci-only-session-secret-0123456789abcdef012
+        HYPER_ADMIN_SECRET: ci-only-admin-secret-0123456789abcdef0123456
+        HYPER_SESSION_COOKIE_SECURE: "1"
+        HYPER_ALLOWED_HOSTS: localhost,127.0.0.1
+      run: uv run hyper doctor --ci
+
+    - name: Run standalone tests
+      shell: bash
+      run: uv run pytest tests/test_standalone/ --override-ini="DJANGO_SETTINGS_MODULE=" -p no:django -v
+
+    - name: Run full test suite
+      shell: bash
+      env:
+        HYPER_TEST_PARALLEL: "1"
+        # CI preset: 6 pure / 3 db / 2 e2e concurrent test procs (the
+        # HYPER_TEST_PROFILE=ci preset in test_runner.py; vs dev defaults of
+        # 50/20/13) so connection bursts stay under the kernel accept queue.
+        # Deliberately NO HYPER_POOL_SIZE / HYPER_THREAD_POOL_SIZE
+        # — those are deployment-tuning overrides a developer's shell does not
+        # set, and injecting them makes default-pool-size unit tests fail.
+        HYPER_TEST_PROFILE: "ci"
+      run: uv run hyper-test --no-log
+
+    - name: Upload test logs on failure
+      if: failure()
+      uses: actions/upload-artifact@v7
+      with:
+        name: test-logs-${{ inputs.artifact-suffix }}
+        path: logs/test_runs/

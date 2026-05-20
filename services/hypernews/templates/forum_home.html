@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}f/{{ forum.name }} — {{ forum.title }}{% endblock %}
+
+{% block content %}
+<div class="forum-page">
+    <div class="forum-header">
+        <div class="forum-header-info">
+            <h2><a href="/f/{{ forum.name }}/">f/{{ forum.name }}</a></h2>
+            <p class="forum-subtitle">{{ forum.title }}
+                {% if forum.is_archived %}<span class="forum-status-badge archived">archived</span>{% endif %}
+                {% if forum.is_locked %}<span class="forum-status-badge locked">locked</span>{% endif %}
+                {% if forum.is_hidden %}<span class="forum-status-badge hidden">hidden</span>{% endif %}
+            </p>
+            <div class="forum-meta">
+                <span>{{ forum.subscriber_count }} subscriber{{ 's' if forum.subscriber_count != 1 else '' }}</span>
+                <span class="sep">&middot;</span>
+                <span>{{ forum.post_count }} post{{ 's' if forum.post_count != 1 else '' }}</span>
+                <span class="sep">&middot;</span>
+                <a href="/f/{{ forum.name }}/about">about</a>
+                <span class="sep">&middot;</span>
+                <a href="/f/{{ forum.name }}/members">members</a>
+                {% if is_mod %}
+                <span class="sep">&middot;</span>
+                <a href="/f/{{ forum.name }}/mod">mod panel</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="forum-header-actions">
+            {% if user %}
+                {% if is_member %}
+                    <form method="post" action="/f/{{ forum.name }}/leave" class="inline-form">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-sm btn-outline">Leave</button>
+                    </form>
+                {% else %}
+                    <form method="post" action="/f/{{ forum.name }}/join" class="inline-form">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-sm btn-primary">Join</button>
+                    </form>
+                {% endif %}
+                {% if not forum.is_archived %}
+                <a href="/f/{{ forum.name }}/submit" class="btn btn-sm">Submit Post</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    {% if forum.description %}
+    <div class="forum-sidebar">
+        <p>{{ forum.description }}</p>
+    </div>
+    {% endif %}
+
+    <div class="tab-nav">
+        <a href="/f/{{ forum.name }}/?tab=hot" class="tab {% if tab == 'hot' %}active{% endif %}">Hot</a>
+        <a href="/f/{{ forum.name }}/?tab=new" class="tab {% if tab == 'new' %}active{% endif %}">New</a>
+        <a href="/f/{{ forum.name }}/?tab=top" class="tab {% if tab == 'top' %}active{% endif %}">Top</a>
+        <a href="/f/{{ forum.name }}/?tab=controversial" class="tab {% if tab == 'controversial' %}active{% endif %}">Controversial</a>
+        <a href="/f/{{ forum.name }}/?tab=rising" class="tab {% if tab == 'rising' %}active{% endif %}">Rising</a>
+    </div>
+
+    <ol class="post-list" start="{{ posts[0].rank if posts else 1 }}">
+        {% for post in posts %}
+        <li class="post-item" id="post-{{ post.id }}">
+            <div class="post-vote">
+                {% if user %}
+                <button class="vote-btn upvote"
+                        hx-post="/vote"
+                        hx-vals='{"post_id": "{{ post.id }}", "direction": "up", "_csrf_token": "{{ csrf_token }}"}'
+                        hx-target="#score-post-{{ post.id }}"
+                        hx-swap="outerHTML"
+                        title="upvote">&#9650;</button>
+                {% else %}
+                <a href="/login" class="vote-btn upvote" title="login to vote">&#9650;</a>
+                {% endif %}
+            </div>
+            <div class="post-content">
+                <div class="post-title-line">
+                    {% if post.is_pinned %}{% include "_partials/pin_badge.html" %}{% endif %}
+                    {% if post.url %}
+                        <a href="{{ post.url }}" class="post-title" rel="nofollow">{{ post.title }}</a>
+                        <span class="post-domain">({{ post.domain }})</span>
+                    {% else %}
+                        <a href="/post/{{ post.pid }}" class="post-title">{{ post.title }}</a>
+                    {% endif %}
+                </div>
+                <div class="post-meta">
+                    <span class="score" id="score-post-{{ post.id }}">{{ post.score }} point{{ 's' if post.score != 1 else '' }}</span>
+                    by <a href="/user/{{ post.author }}">{{ post.author }}</a>
+                    <span class="post-time">{{ post.time_ago }}</span>
+                    |
+                    <a href="/post/{{ post.pid }}">{{ post.comment_count }} comment{{ 's' if post.comment_count != 1 else '' }}</a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+
+    {% if not posts %}
+    <p class="empty-state">No posts in this forum yet. {% if user and not forum.is_archived %}<a href="/f/{{ forum.name }}/submit">Be the first to submit!</a>{% endif %}</p>
+    {% endif %}
+
+    <div class="pagination">
+        {% if prev_cursor %}
+            <a href="/f/{{ forum.name }}/?tab={{ tab }}" class="page-link">&#8592; First</a>
+        {% endif %}
+        {% if next_cursor %}
+            <a href="/f/{{ forum.name }}/?tab={{ tab }}&cursor={{ next_cursor }}" class="page-link">More &#8594;</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

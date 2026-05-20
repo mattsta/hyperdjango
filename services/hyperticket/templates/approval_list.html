@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Approvals — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>Pending Approvals</h2>
+<div class="card">
+    {% if approvals %}
+    <table>
+        <thead><tr><th>Ticket</th><th>Requested By</th><th>Comment</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for a in approvals %}
+            <tr>
+                <td>
+                    {% if ticket_map[a.ticket_id] %}
+                    <a href="/tickets/{{ a.ticket_id }}">{{ ticket_map[a.ticket_id].ticket_number }}</a>
+                    {% else %}
+                    #{{ a.ticket_id }}
+                    {% endif %}
+                </td>
+                <td>Agent #{{ a.requested_by_id }}</td>
+                <td>{{ a.comment or "—" }}</td>
+                <td>
+                    <form method="post" action="/approvals/{{ a.id }}/approve" style="display:inline">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-primary" style="padding:0.25rem 0.5rem;font-size:0.75rem">Approve</button>
+                    </form>
+                    <form method="post" action="/approvals/{{ a.id }}/reject" style="display:inline">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.5rem;font-size:0.75rem">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:#6b7280">No pending approvals.</p>
+    {% endif %}
+</div>
+{% endblock %}

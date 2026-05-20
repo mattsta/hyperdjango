@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Custom Fields — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>Custom Fields Schema</h2>
+<div class="card">
+    <p style="margin-bottom:1rem;color:#6b7280">Define custom fields that appear on ticket forms. JSON array of field definitions.</p>
+    <form method="post" action="/admin/custom-fields/">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <div class="form-group">
+            <label>Schema (JSON array)</label>
+            <textarea name="schema_json" rows="10" style="font-family:monospace;font-size:0.8rem">{{ schema_json }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Schema</button>
+    </form>
+    {% if custom_fields %}
+    <h3 style="margin-top:1.5rem">Current Fields ({{ custom_fields | length }})</h3>
+    <table>
+        <thead><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead>
+        <tbody>
+            {% for f in custom_fields %}
+            <tr>
+                <td>{{ f.name if f.name else f.get("name", "?") }}</td>
+                <td>{{ f.type if f.type else f.get("type", "text") }}</td>
+                <td>{{ "Yes" if (f.required if f.required is defined else f.get("required", false)) else "No" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

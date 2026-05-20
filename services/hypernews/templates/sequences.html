@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Sequences — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="forum-directory">
+    <div class="page-header">
+        <h2>Sequences</h2>
+        {% if user %}
+        <a href="/sequences/create" class="btn btn-primary btn-sm">Create Sequence</a>
+        {% endif %}
+    </div>
+
+    <div class="forum-list">
+        {% for seq in sequences %}
+        <div class="forum-card">
+            <div class="forum-card-header">
+                <a href="/sequences/{{ seq.id }}" class="forum-name">{{ seq.title }}</a>
+            </div>
+            <p class="forum-description">{{ seq.description }}</p>
+            <div class="forum-stats">
+                <span>by {{ seq.author_name }}</span>
+                <span class="sep">&middot;</span>
+                <span>{{ seq.entry_count }} post{{ 's' if seq.entry_count != 1 else '' }}</span>
+                <span class="sep">&middot;</span>
+                <span>{{ seq.created_at }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not sequences %}
+    <p class="empty-state">No sequences yet. {% if user %}<a href="/sequences/create">Create one!</a>{% endif %}</p>
+    {% endif %}
+</div>
+{% endblock %}

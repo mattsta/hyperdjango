@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Create Poll — {{ post.title }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Create Poll on <a href="/post/{{ post.pid }}">{{ post.title }}</a></h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" action="/post/{{ post.pid }}/poll" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="question">Question</label>
+            <input type="text" id="question" name="question" maxlength="300" required
+                   placeholder="What do you want to ask?">
+        </div>
+
+        <div class="form-group">
+            <label>Poll Type</label>
+            <label>
+                <input type="radio" name="poll_type" value="single_choice" checked>
+                Single choice — voters pick one option
+            </label>
+            <label>
+                <input type="radio" name="poll_type" value="multiple_choice">
+                Multiple choice — voters can pick several options
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="options">Options <span class="optional">(one per line, minimum 2)</span></label>
+            <textarea id="options" name="options" rows="6" required
+                      placeholder="Option 1&#10;Option 2&#10;Option 3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Poll</button>
+        <a href="/post/{{ post.pid }}" class="btn btn-sm btn-outline">Cancel</a>
+    </form>
+</div>
+{% endblock %}

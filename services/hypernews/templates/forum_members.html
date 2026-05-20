@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Members of f/{{ forum.name }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="forum-page">
+    <div class="forum-header">
+        <h2><a href="/f/{{ forum.name }}/">f/{{ forum.name }}</a> &mdash; Members</h2>
+        <p class="forum-subtitle">{{ forum.subscriber_count }} member{{ 's' if forum.subscriber_count != 1 else '' }}</p>
+    </div>
+
+    <table class="member-table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Joined</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td><a href="/user/{{ member.username }}">{{ member.username }}</a></td>
+                <td><span class="role-badge role-{{ member.role }}">{{ member.role }}</span></td>
+                <td>{{ member.joined }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if not members %}
+    <p class="empty-state">No members yet.</p>
+    {% endif %}
+
+    {% if next_cursor %}
+    <div class="pagination">
+        <a href="/f/{{ forum.name }}/members?cursor={{ next_cursor }}" class="page-link">More &rarr;</a>
+    </div>
+    {% endif %}
+
+    <div class="forum-actions">
+        <a href="/f/{{ forum.name }}/" class="btn btn-sm">&larr; Back to forum</a>
+    </div>
+</div>
+{% endblock %}

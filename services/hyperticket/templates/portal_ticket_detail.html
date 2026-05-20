@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ ticket.ticket_number }} — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>{{ ticket.ticket_number }}: {{ ticket.title }}</h2>
+    <div style="margin:0.5rem 0;font-size:0.875rem;color:#6b7280">
+        {% if status %}<span class="badge" style="background:{{ status.color }};color:#fff">{{ status.label }}</span>{% endif %}
+        {% if priority %}<span class="badge" style="background:{{ priority.color }};color:#fff">{{ priority.label }}</span>{% endif %}
+        — {{ time_ago(ticket.created_at) }}
+    </div>
+    {% if ticket.description %}<p style="margin-top:1rem">{{ ticket.description }}</p>{% endif %}
+</div>
+
+<div class="card">
+    <h3>Comments</h3>
+    {% for comment in comments %}
+    <div style="padding:0.75rem 0;border-bottom:1px solid #e5e7eb">
+        <div style="font-size:0.75rem;color:#6b7280">{{ comment.author_type }} — {{ time_ago(comment.created_at) }}</div>
+        <div style="margin-top:0.25rem">{{ comment.body }}</div>
+    </div>
+    {% endfor %}
+
+    {% if not is_locked %}
+    <form method="post" action="/portal/tickets/{{ ticket.id }}/comment" style="margin-top:1rem">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <div class="form-group">
+            <textarea name="body" placeholder="Add a reply..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Reply</button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>Rate this ticket</h3>
+    <form method="post" action="/portal/tickets/{{ ticket.id }}/rate">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <div class="form-group">
+            <label>Satisfaction (1-5)</label>
+            <select name="score" required>
+                <option value="5">5 — Excellent</option>
+                <option value="4">4 — Good</option>
+                <option value="3">3 — Okay</option>
+                <option value="2">2 — Poor</option>
+                <option value="1">1 — Terrible</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <textarea name="comment" placeholder="Optional feedback..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Rating</button>
+    </form>
+</div>
+{% endblock %}

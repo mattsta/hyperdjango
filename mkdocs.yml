@@ -1,0 +1,235 @@
+site_name: HyperDjango
+site_description: Hypermodern web framework with native Zig performance
+site_url: https://mattsta.github.io/hyperdjango/
+repo_url: https://github.com/mattsta/hyperdjango
+repo_name: mattsta/hyperdjango
+edit_uri: edit/main/docs/
+copyright: HyperDjango &mdash; Hypermodern web framework with native Zig performance.
+
+exclude_docs: |
+  internal/
+  _overrides/
+
+theme:
+  name: material
+  custom_dir: docs/_overrides
+  language: en
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.action.edit
+    - content.action.view
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - search.share
+    - toc.follow
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mattsta/hyperdjango
+      name: HyperDjango on GitHub
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/htmx-bootstrap.js
+  - https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Quickstart: getting-started.md
+    - Clone and Run a Service: running-services.md
+    - Tutorial: tutorial.md
+    - Architecture: architecture.md
+    - Patterns & Best Practices: patterns.md
+  - Core:
+    - Models & ORM: models.md
+    - Database: database.md
+    - Views: views.md
+    - Routing: routing.md
+    - Templates: templates.md
+    - Middleware: middleware.md
+    - Server: server.md
+    - Validation: validation.md
+  - ORM:
+    - Lookups & Transforms: lookups.md
+    - Custom Lookups: custom-lookups.md
+    - Expressions & Aggregation: expressions.md
+    - Transactions: transactions.md
+    - Multi-Database: multi-db.md
+    - Legacy Databases: legacy-databases.md
+    - Pagination: pagination.md
+    - Migrations: migrations.md
+    - Mixins: mixins.md
+    - Query Cache: query-cache.md
+    - Compiled SQL Cache: orm-sql-cache.md
+    - Batch Writer & TTL Cache: batch-writer.md
+    - Custom Fields: fields.md
+    - Fixtures: fixtures.md
+    - PostgreSQL Extensions: postgres-ext.md
+    - Vector Embeddings: embeddings.md
+  - Auth & Admin:
+    - Auth & RBAC: auth.md
+    - RBAC Tutorial: rbac-tutorial.md
+    - HyperGuard: guard.md
+    - Sessions: sessions.md
+    - Admin: admin.md
+  - HTTP:
+    - Request & Response: request-response.md
+    - CSRF Protection: csrf.md
+    - Conditional Views: conditional-views.md
+    - Class-Based Views: class-based-views.md
+    - Async: async.md
+  - API:
+    - REST Framework: rest.md
+    - Serializers: serializers.md
+    - OpenAPI: openapi.md
+    - Forms: forms.md
+    - FormSets: formsets.md
+    - Rate Limiting: ratelimit.md
+    - Rate Limit Client: ratelimit-client.md
+  - Real-Time:
+    - Channels: channels.md
+    - Real-Time Patterns: realtime.md
+    - Service Client & Change Feed: serviceclient.md
+  - Data:
+    - Email: email.md
+    - Files & Uploads: files.md
+    - File Upload Modes: uploads.md
+    - Custom Storage Backends: custom-storage.md
+    - Search: search.md
+    - Geospatial (H3): geo.md
+    - Signals: signals.md
+    - Messages: messages.md
+    - Background Tasks: tasks.md
+    - Task Queue Adapters: task-queue-adapters.md
+    - Signing: signing.md
+  - Multi-Tenant & Metering:
+    - Multi-Tenancy: tenancy.md
+    - Usage Metering: metering.md
+    - Status Timeline: timeline.md
+  - Content:
+    - Flat Pages: flatpages.md
+    - Redirects: redirects.md
+    - Sitemaps: sitemaps.md
+    - Syndication (RSS/Atom): syndication.md
+  - Localization:
+    - Internationalization (i18n): i18n.md
+    - Locale-Aware Formats: formats.md
+    - Humanize: humanize.md
+  - Caching:
+    - Cache: cache.md
+    - Cache Adapters: cache-adapters.md
+  - Security:
+    - Public IDs: public-ids.md
+    - Unified ID System: ids.md
+    - Security Headers: security.md
+    - Content Security Policy: csp.md
+    - Mutual TLS: mtls.md
+  - Production:
+    - Reference Architecture: reference-architecture.md
+    - Production Scaling: production-scaling.md
+    - Deployment: deployment.md
+    - Error Reporting: error-reporting.md
+    - Performance: performance.md
+    - PostgreSQL: postgres.md
+    - Pool Optimization: pool.md
+    - Logging: logging.md
+    - Telemetry: telemetry.md
+    - Metrics: metrics.md
+    - DB Instrumentation: db-instrumentation.md
+    - Asset Versioning: versioning.md
+    - Tuning Settings: tuning.md
+    - Static Files: static-files.md
+    - Profiling: profiling.md
+    - CLI Commands: cli.md
+    - Custom Commands: commands.md
+  - Configuration:
+    - Settings: settings.md
+    - Site Configuration: site-config.md
+  - System Checks: checks.md
+  - Testing: testing.md
+  - Test Harness: test-harness.md
+  - Guides:
+    - Models: models-guide.md
+    - Views: views-guide.md
+    - Templates: templates-guide.md
+    - Forms: forms-guide.md
+    - Queries: queries-guide.md
+    - Auth: auth-guide.md
+    - Admin: admin-guide.md
+    - Async: async-guide.md
+    - Migrations: migrations-guide.md
+    - Testing: testing-guide.md
+    - Performance: performance-guide.md
+    - Security: security-guide.md
+    - Deployment: deployment-guide.md
+  - Service Walkthroughs: service-walkthroughs.md
+  - Migrating from Django: django-migration.md
+  - Services: services.md
+  - Benchmarks: benchmarks.md
+  - API Reference: api.md
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      permalink_title: Anchor link to this section
+      toc_depth: 3
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde

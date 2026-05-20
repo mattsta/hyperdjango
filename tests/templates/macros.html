@@ -1,0 +1,10 @@
+{% macro input_field(name, type='text', value='') %}
+<input type="{{ type }}" name="{{ name }}" value="{{ value }}">
+{% endmacro %}
+
+{% macro form_row(label, name) %}
+<div class="form-row">
+<label>{{ label }}</label>
+{{ input_field(name) }}
+</div>
+{% endmacro %}

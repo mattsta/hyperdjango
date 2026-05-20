@@ -1,0 +1,4784 @@
+{
+  "meta": {
+    "host": "127.0.0.1",
+    "port": 18991,
+    "platform": "Linux",
+    "cores": 256,
+    "models": [
+      "threaded",
+      "reactor"
+    ],
+    "workers": [
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      160,
+      200,
+      256
+    ],
+    "payloads": [
+      64,
+      1024,
+      4096,
+      16384
+    ],
+    "reactor_divisors": [
+      1,
+      32,
+      8
+    ],
+    "concurrency_floor": 128,
+    "duration_s": 10.0,
+    "warmup_s": 2.0,
+    "client": "wrk",
+    "profiler": "perf",
+    "cell_count": 128
+  },
+  "cells": [
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 8,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 122649.17,
+      "p50_ms": 0.096,
+      "p99_ms": 1.98,
+      "requests": 1226491,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 49.5625,
+      "contention": {
+        "active_peak": 1.0,
+        "responses_delta": 1470594.0,
+        "responses_5xx_delta": 474546.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 8,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 88584.32,
+      "p50_ms": 0.152,
+      "p99_ms": 2.13,
+      "requests": 885843,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 49.75390625,
+      "contention": {
+        "active_peak": 1.0,
+        "responses_delta": 1117050.0,
+        "responses_5xx_delta": 421136.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 8,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 75352.48,
+      "p50_ms": 0.198,
+      "p99_ms": 2.24,
+      "requests": 753524,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 49.74609375,
+      "contention": {
+        "active_peak": 1.0,
+        "responses_delta": 952990.0,
+        "responses_5xx_delta": 380387.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 8,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 88031.05,
+      "p50_ms": 0.225,
+      "p99_ms": 1.78,
+      "requests": 880310,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 50.6484375,
+      "contention": {
+        "active_peak": 1.0,
+        "responses_delta": 1053788.0,
+        "responses_5xx_delta": 495027.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 16,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 110450.16,
+      "p50_ms": 0.13,
+      "p99_ms": 0.262,
+      "requests": 1104501,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 55.58984375,
+      "contention": {
+        "active_peak": 2.0,
+        "responses_delta": 1387126.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 16,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 119478.06,
+      "p50_ms": 0.101,
+      "p99_ms": 0.324,
+      "requests": 1194780,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 55.6171875,
+      "contention": {
+        "active_peak": 5.0,
+        "responses_delta": 1482246.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 16,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 104045.29,
+      "p50_ms": 0.138,
+      "p99_ms": 0.28800000000000003,
+      "requests": 1040452,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 55.8125,
+      "contention": {
+        "active_peak": 6.0,
+        "responses_delta": 1348462.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 16,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 106525.74,
+      "p50_ms": 0.12,
+      "p99_ms": 0.311,
+      "requests": 1065257,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 57.203125,
+      "contention": {
+        "active_peak": 4.0,
+        "responses_delta": 1299351.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 32,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 204782.62,
+      "p50_ms": 0.125,
+      "p99_ms": 0.365,
+      "requests": 2047826,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 67.10546875,
+      "contention": {
+        "active_peak": 3.0,
+        "responses_delta": 2552257.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 32,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 185266.16,
+      "p50_ms": 0.153,
+      "p99_ms": 0.274,
+      "requests": 1852661,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 67.71875,
+      "contention": {
+        "active_peak": 13.0,
+        "responses_delta": 2317956.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 32,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 202626.5,
+      "p50_ms": 0.129,
+      "p99_ms": 0.339,
+      "requests": 2026265,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 68.1953125,
+      "contention": {
+        "active_peak": 32.0,
+        "responses_delta": 2387797.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 32,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 180901.34,
+      "p50_ms": 0.147,
+      "p99_ms": 0.299,
+      "requests": 1809013,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 70.82421875,
+      "contention": {
+        "active_peak": 8.0,
+        "responses_delta": 2151971.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 64,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 234198.03,
+      "p50_ms": 0.219,
+      "p99_ms": 0.523,
+      "requests": 2341980,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 90.765625,
+      "contention": {
+        "active_peak": 46.0,
+        "responses_delta": 2907154.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 64,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 257865.47,
+      "p50_ms": 0.20500000000000002,
+      "p99_ms": 0.40700000000000003,
+      "requests": 2578654,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 91.51953125,
+      "contention": {
+        "active_peak": 47.0,
+        "responses_delta": 3086723.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 64,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 272404.82,
+      "p50_ms": 0.196,
+      "p99_ms": 0.324,
+      "requests": 2724048,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 92.41796875,
+      "contention": {
+        "active_peak": 48.0,
+        "responses_delta": 3267693.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 64,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 203871.21,
+      "p50_ms": 0.251,
+      "p99_ms": 0.449,
+      "requests": 2038712,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 97.7421875,
+      "contention": {
+        "active_peak": 41.0,
+        "responses_delta": 2463103.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 96,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 260136.14,
+      "p50_ms": 0.28600000000000003,
+      "p99_ms": 0.539,
+      "requests": 2601361,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 114.1171875,
+      "contention": {
+        "active_peak": 71.0,
+        "responses_delta": 3117562.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 96,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 99993.57,
+      "p50_ms": 0.392,
+      "p99_ms": 2.6,
+      "requests": 999935,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 115.0859375,
+      "contention": {
+        "active_peak": 78.0,
+        "responses_delta": 1509966.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 96,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 261293.14,
+      "p50_ms": 0.28300000000000003,
+      "p99_ms": 0.591,
+      "requests": 2612931,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 116.5,
+      "contention": {
+        "active_peak": 85.0,
+        "responses_delta": 3121293.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 96,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 196628.72,
+      "p50_ms": 0.34800000000000003,
+      "p99_ms": 0.668,
+      "requests": 1966287,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 124.4921875,
+      "contention": {
+        "active_peak": 75.0,
+        "responses_delta": 2356586.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 128,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 87219.58,
+      "p50_ms": 0.424,
+      "p99_ms": 3.88,
+      "requests": 872195,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 137.53125,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 1389917.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 128,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 75807.73,
+      "p50_ms": 0.5710000000000001,
+      "p99_ms": 4.11,
+      "requests": 758077,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 138.94921875,
+      "contention": {
+        "active_peak": 108.0,
+        "responses_delta": 1189027.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 128,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 19053.64,
+      "p50_ms": 6.74,
+      "p99_ms": 8.47,
+      "requests": 190536,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 140.8984375,
+      "contention": {
+        "active_peak": 102.0,
+        "responses_delta": 253180.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 128,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 138765.59,
+      "p50_ms": 0.5660000000000001,
+      "p99_ms": 3.92,
+      "requests": 1387655,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 151.5078125,
+      "contention": {
+        "active_peak": 103.0,
+        "responses_delta": 1771195.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 160,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 47469.34,
+      "p50_ms": 3.98,
+      "p99_ms": 4.47,
+      "requests": 474693,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 137.359375,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 938860.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 160,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 19271.01,
+      "p50_ms": 6.68,
+      "p99_ms": 7.39,
+      "requests": 192710,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 138.70703125,
+      "contention": {
+        "active_peak": 104.0,
+        "responses_delta": 262398.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 160,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 44951.57,
+      "p50_ms": 3.73,
+      "p99_ms": 4.13,
+      "requests": 449515,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 140.92578125,
+      "contention": {
+        "active_peak": 103.0,
+        "responses_delta": 916960.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 160,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 45097.75,
+      "p50_ms": 3.7,
+      "p99_ms": 4.1,
+      "requests": 450977,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 151.171875,
+      "contention": {
+        "active_peak": 122.0,
+        "responses_delta": 823635.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 200,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 45030.98,
+      "p50_ms": 3.98,
+      "p99_ms": 4.45,
+      "requests": 450309,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 137.41796875,
+      "contention": {
+        "active_peak": 87.0,
+        "responses_delta": 801894.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 200,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 59352.71,
+      "p50_ms": 0.5710000000000001,
+      "p99_ms": 4.79,
+      "requests": 593527,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 138.9765625,
+      "contention": {
+        "active_peak": 94.0,
+        "responses_delta": 1104478.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 200,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 50143.96,
+      "p50_ms": 3.6,
+      "p99_ms": 4.9,
+      "requests": 501439,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 140.609375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 967527.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 200,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 182960.03,
+      "p50_ms": 0.507,
+      "p99_ms": 0.803,
+      "requests": 1829600,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 151.53515625,
+      "contention": {
+        "active_peak": 106.0,
+        "responses_delta": 2225251.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 256,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 245875.42,
+      "p50_ms": 0.40700000000000003,
+      "p99_ms": 0.75,
+      "requests": 2458754,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 137.45703125,
+      "contention": {
+        "active_peak": 72.0,
+        "responses_delta": 2956150.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 256,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 36488.07,
+      "p50_ms": 3.84,
+      "p99_ms": 4.34,
+      "requests": 364880,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 139.13671875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 808862.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 256,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 59475.38,
+      "p50_ms": 0.627,
+      "p99_ms": 4.53,
+      "requests": 594753,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 141.109375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 1056908.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "threaded",
+        "workers": 256,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 37063.51,
+      "p50_ms": 3.85,
+      "p99_ms": 4.2,
+      "requests": 370635,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 151.28125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 719147.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 8,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 118981.91,
+      "p50_ms": 1.06,
+      "p99_ms": 1.27,
+      "requests": 1189819,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 50.13671875,
+      "contention": {
+        "active_peak": 8.0,
+        "responses_delta": 1468534.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 8,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 126355.5,
+      "p50_ms": 0.99,
+      "p99_ms": 1.22,
+      "requests": 1263555,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 50.1015625,
+      "contention": {
+        "active_peak": 8.0,
+        "responses_delta": 1534691.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 8,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 112250.21,
+      "p50_ms": 1.13,
+      "p99_ms": 1.34,
+      "requests": 1122502,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 50.1953125,
+      "contention": {
+        "active_peak": 8.0,
+        "responses_delta": 1389127.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 8,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 112861.97,
+      "p50_ms": 1.11,
+      "p99_ms": 1.33,
+      "requests": 1128619,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 51.046875,
+      "contention": {
+        "active_peak": 8.0,
+        "responses_delta": 1365788.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 222746.2,
+      "p50_ms": 0.5640000000000001,
+      "p99_ms": 0.764,
+      "requests": 2227462,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 56.23828125,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2745910.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 64,
+        "reactor_count": 2
+      },
+      "throughput_rps": 205699.19,
+      "p50_ms": 0.606,
+      "p99_ms": 0.791,
+      "requests": 2056991,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 56.54296875,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2567780.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 190175.97,
+      "p50_ms": 0.655,
+      "p99_ms": 0.8270000000000001,
+      "requests": 1901759,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 56.3671875,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2349965.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 1024,
+        "reactor_count": 2
+      },
+      "throughput_rps": 192353.28,
+      "p50_ms": 0.637,
+      "p99_ms": 0.86,
+      "requests": 1923532,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 56.625,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2396196.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 197284.07,
+      "p50_ms": 0.632,
+      "p99_ms": 0.84,
+      "requests": 1972840,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 56.33203125,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2424611.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 4096,
+        "reactor_count": 2
+      },
+      "throughput_rps": 196825.85,
+      "p50_ms": 0.628,
+      "p99_ms": 0.843,
+      "requests": 1968258,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 56.59765625,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2441568.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 189202.38,
+      "p50_ms": 0.34600000000000003,
+      "p99_ms": 0.777,
+      "requests": 1892023,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 57.83984375,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2310439.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 16,
+        "payload_bytes": 16384,
+        "reactor_count": 2
+      },
+      "throughput_rps": 190571.59,
+      "p50_ms": 0.5670000000000001,
+      "p99_ms": 0.794,
+      "requests": 1905715,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 58.15625,
+      "contention": {
+        "active_peak": 16.0,
+        "responses_delta": 2326532.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 307081.04,
+      "p50_ms": 0.34700000000000003,
+      "p99_ms": 0.424,
+      "requests": 3070810,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 68.5546875,
+      "contention": {
+        "active_peak": 32.0,
+        "responses_delta": 3701850.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 64,
+        "reactor_count": 4
+      },
+      "throughput_rps": 298586.5,
+      "p50_ms": 0.34800000000000003,
+      "p99_ms": 0.432,
+      "requests": 2985865,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 68.828125,
+      "contention": {
+        "active_peak": 30.0,
+        "responses_delta": 3575661.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 294325.99,
+      "p50_ms": 0.36,
+      "p99_ms": 0.441,
+      "requests": 2943259,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 68.81640625,
+      "contention": {
+        "active_peak": 32.0,
+        "responses_delta": 3568778.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 1024,
+        "reactor_count": 4
+      },
+      "throughput_rps": 276598.76,
+      "p50_ms": 0.32,
+      "p99_ms": 0.588,
+      "requests": 2765987,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 69.09765625,
+      "contention": {
+        "active_peak": 31.0,
+        "responses_delta": 3348267.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 279411.06,
+      "p50_ms": 0.381,
+      "p99_ms": 0.46,
+      "requests": 2794110,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 68.60546875,
+      "contention": {
+        "active_peak": 32.0,
+        "responses_delta": 3375127.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 4096,
+        "reactor_count": 4
+      },
+      "throughput_rps": 266701.57,
+      "p50_ms": 0.343,
+      "p99_ms": 0.604,
+      "requests": 2667015,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 69.453125,
+      "contention": {
+        "active_peak": 32.0,
+        "responses_delta": 3223863.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 208611.63,
+      "p50_ms": 0.28200000000000003,
+      "p99_ms": 0.632,
+      "requests": 2086116,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 71.81640625,
+      "contention": {
+        "active_peak": 32.0,
+        "responses_delta": 2511445.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 32,
+        "payload_bytes": 16384,
+        "reactor_count": 4
+      },
+      "throughput_rps": 197552.6,
+      "p50_ms": 0.296,
+      "p99_ms": 0.687,
+      "requests": 1975526,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 72.19921875,
+      "contention": {
+        "active_peak": 32.0,
+        "responses_delta": 2372960.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 279036.4,
+      "p50_ms": 0.366,
+      "p99_ms": 0.542,
+      "requests": 2790364,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 92.8359375,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 3382797.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 64,
+        "reactor_count": 2
+      },
+      "throughput_rps": 21837.64,
+      "p50_ms": 6.1,
+      "p99_ms": 6.7,
+      "requests": 218376,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 92.27734375,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 460710.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 64,
+        "reactor_count": 8
+      },
+      "throughput_rps": 264203.47,
+      "p50_ms": 0.382,
+      "p99_ms": 0.56,
+      "requests": 2642034,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 93.70703125,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 3166051.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 20933.84,
+      "p50_ms": 6.18,
+      "p99_ms": 6.69,
+      "requests": 209338,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 93.1953125,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 296040.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 1024,
+        "reactor_count": 2
+      },
+      "throughput_rps": 284408.38,
+      "p50_ms": 0.37,
+      "p99_ms": 0.516,
+      "requests": 2844083,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 92.9765625,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 3412755.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 1024,
+        "reactor_count": 8
+      },
+      "throughput_rps": 21287.01,
+      "p50_ms": 6.26,
+      "p99_ms": 7.93,
+      "requests": 212870,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 94.07421875,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 449752.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 262939.36,
+      "p50_ms": 0.394,
+      "p99_ms": 0.584,
+      "requests": 2629393,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 93.234375,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 3168922.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 4096,
+        "reactor_count": 2
+      },
+      "throughput_rps": 264145.27,
+      "p50_ms": 0.382,
+      "p99_ms": 0.5700000000000001,
+      "requests": 2641452,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 93.45703125,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 3195240.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 4096,
+        "reactor_count": 8
+      },
+      "throughput_rps": 258165.56,
+      "p50_ms": 0.4,
+      "p99_ms": 0.5700000000000001,
+      "requests": 2581655,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 94.953125,
+      "contention": {
+        "active_peak": 63.0,
+        "responses_delta": 3081527.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 21059.93,
+      "p50_ms": 6.21,
+      "p99_ms": 6.9,
+      "requests": 210599,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 99.265625,
+      "contention": {
+        "active_peak": 64.0,
+        "responses_delta": 290143.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 16384,
+        "reactor_count": 2
+      },
+      "throughput_rps": 197028.05,
+      "p50_ms": 0.515,
+      "p99_ms": 0.765,
+      "requests": 1970280,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 99.11328125,
+      "contention": {
+        "active_peak": 63.0,
+        "responses_delta": 2372425.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 64,
+        "payload_bytes": 16384,
+        "reactor_count": 8
+      },
+      "throughput_rps": 176681.24,
+      "p50_ms": 0.5660000000000001,
+      "p99_ms": 0.8,
+      "requests": 1766812,
+      "errors": 0,
+      "concurrency": 128,
+      "rss_mb": 100.2734375,
+      "contention": {
+        "active_peak": 60.0,
+        "responses_delta": 2130151.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 89392.95,
+      "p50_ms": 0.795,
+      "p99_ms": 5.48,
+      "requests": 893929,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 116.53515625,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 1047548.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 64,
+        "reactor_count": 3
+      },
+      "throughput_rps": 247374.23,
+      "p50_ms": 0.58,
+      "p99_ms": 4.8,
+      "requests": 2473742,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 115.828125,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 2984797.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 64,
+        "reactor_count": 12
+      },
+      "throughput_rps": 242773.28,
+      "p50_ms": 0.634,
+      "p99_ms": 0.88,
+      "requests": 2427732,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 117.91796875,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 2887527.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 38491.77,
+      "p50_ms": 5.05,
+      "p99_ms": 5.61,
+      "requests": 384917,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 117.23828125,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 487718.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 1024,
+        "reactor_count": 3
+      },
+      "throughput_rps": 169368.52,
+      "p50_ms": 0.642,
+      "p99_ms": 5.56,
+      "requests": 1693685,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 116.94921875,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 2196071.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 1024,
+        "reactor_count": 12
+      },
+      "throughput_rps": 40419.73,
+      "p50_ms": 5.4,
+      "p99_ms": 7.0,
+      "requests": 404197,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 118.69921875,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 798774.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 19800.11,
+      "p50_ms": 9.63,
+      "p99_ms": 10.63,
+      "requests": 198001,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 117.3125,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 274470.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 4096,
+        "reactor_count": 3
+      },
+      "throughput_rps": 19534.62,
+      "p50_ms": 9.78,
+      "p99_ms": 11.14,
+      "requests": 195346,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 117.6953125,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 270016.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 4096,
+        "reactor_count": 12
+      },
+      "throughput_rps": 45989.49,
+      "p50_ms": 5.38,
+      "p99_ms": 6.22,
+      "requests": 459894,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 120.20703125,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 892465.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 184796.79,
+      "p50_ms": 0.78,
+      "p99_ms": 1.17,
+      "requests": 1847967,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 126.6015625,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 2109349.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 16384,
+        "reactor_count": 3
+      },
+      "throughput_rps": 19214.94,
+      "p50_ms": 9.96,
+      "p99_ms": 11.17,
+      "requests": 192149,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 126.10546875,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 264972.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 96,
+        "payload_bytes": 16384,
+        "reactor_count": 12
+      },
+      "throughput_rps": 174678.67,
+      "p50_ms": 0.517,
+      "p99_ms": 1.2,
+      "requests": 1746786,
+      "errors": 0,
+      "concurrency": 192,
+      "rss_mb": 128.17578125,
+      "contention": {
+        "active_peak": 96.0,
+        "responses_delta": 2105707.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 36799.64,
+      "p50_ms": 6.98,
+      "p99_ms": 7.97,
+      "requests": 367996,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 140.41015625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 545692.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 64,
+        "reactor_count": 4
+      },
+      "throughput_rps": 43341.93,
+      "p50_ms": 7.15,
+      "p99_ms": 8.55,
+      "requests": 433419,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 139.71875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 797150.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 64,
+        "reactor_count": 16
+      },
+      "throughput_rps": 36812.3,
+      "p50_ms": 7.31,
+      "p99_ms": 9.24,
+      "requests": 368123,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 142.30078125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 871661.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 36592.46,
+      "p50_ms": 6.95,
+      "p99_ms": 8.28,
+      "requests": 365924,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 141.41796875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 579623.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 1024,
+        "reactor_count": 4
+      },
+      "throughput_rps": 44673.01,
+      "p50_ms": 7.43,
+      "p99_ms": 8.65,
+      "requests": 446730,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 141.33984375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 888869.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 1024,
+        "reactor_count": 16
+      },
+      "throughput_rps": 19530.87,
+      "p50_ms": 13.22,
+      "p99_ms": 16.97,
+      "requests": 195308,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 143.74609375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 275261.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 36830.59,
+      "p50_ms": 6.95,
+      "p99_ms": 8.17,
+      "requests": 368305,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 141.921875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 492485.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 4096,
+        "reactor_count": 4
+      },
+      "throughput_rps": 54280.88,
+      "p50_ms": 6.91,
+      "p99_ms": 9.3,
+      "requests": 542808,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 142.7578125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 929086.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 4096,
+        "reactor_count": 16
+      },
+      "throughput_rps": 39294.65,
+      "p50_ms": 7.37,
+      "p99_ms": 9.37,
+      "requests": 392946,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 145.7265625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 848777.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 41561.11,
+      "p50_ms": 7.29,
+      "p99_ms": 7.98,
+      "requests": 415611,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 153.9609375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 787086.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 16384,
+        "reactor_count": 4
+      },
+      "throughput_rps": 95704.99,
+      "p50_ms": 1.29,
+      "p99_ms": 9.31,
+      "requests": 957049,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 153.43359375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 1327457.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 128,
+        "payload_bytes": 16384,
+        "reactor_count": 16
+      },
+      "throughput_rps": 167591.66,
+      "p50_ms": 0.6990000000000001,
+      "p99_ms": 1.61,
+      "requests": 1675916,
+      "errors": 0,
+      "concurrency": 256,
+      "rss_mb": 156.265625,
+      "contention": {
+        "active_peak": 127.0,
+        "responses_delta": 2035148.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 53441.24,
+      "p50_ms": 8.42,
+      "p99_ms": 9.64,
+      "requests": 534412,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 140.07421875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 663029.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 64,
+        "reactor_count": 5
+      },
+      "throughput_rps": 37964.59,
+      "p50_ms": 9.29,
+      "p99_ms": 10.97,
+      "requests": 379645,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 140.20703125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 876342.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 64,
+        "reactor_count": 20
+      },
+      "throughput_rps": 40563.24,
+      "p50_ms": 9.61,
+      "p99_ms": 14.43,
+      "requests": 405632,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 143.18359375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 754660.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 37291.62,
+      "p50_ms": 8.6,
+      "p99_ms": 9.81,
+      "requests": 372916,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 141.5,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 509358.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 1024,
+        "reactor_count": 5
+      },
+      "throughput_rps": 36352.41,
+      "p50_ms": 10.83,
+      "p99_ms": 12.67,
+      "requests": 363524,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 141.15234375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 682003.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 1024,
+        "reactor_count": 20
+      },
+      "throughput_rps": 40659.68,
+      "p50_ms": 8.91,
+      "p99_ms": 12.44,
+      "requests": 406596,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 144.8828125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 886747.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 37123.44,
+      "p50_ms": 8.57,
+      "p99_ms": 9.9,
+      "requests": 371234,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 141.9765625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 484003.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 4096,
+        "reactor_count": 5
+      },
+      "throughput_rps": 19447.66,
+      "p50_ms": 16.58,
+      "p99_ms": 20.26,
+      "requests": 194476,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 142.71484375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 280521.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 4096,
+        "reactor_count": 20
+      },
+      "throughput_rps": 35683.24,
+      "p50_ms": 9.13,
+      "p99_ms": 13.34,
+      "requests": 356832,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 146.59765625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 815486.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 18716.84,
+      "p50_ms": 16.93,
+      "p99_ms": 19.7,
+      "requests": 187168,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 153.7421875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 244731.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 16384,
+        "reactor_count": 5
+      },
+      "throughput_rps": 170960.86,
+      "p50_ms": 0.87,
+      "p99_ms": 1.97,
+      "requests": 1709608,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 153.796875,
+      "contention": {
+        "active_peak": 114.0,
+        "responses_delta": 2076580.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 160,
+        "payload_bytes": 16384,
+        "reactor_count": 20
+      },
+      "throughput_rps": 165387.34,
+      "p50_ms": 0.89,
+      "p99_ms": 2.0,
+      "requests": 1653873,
+      "errors": 0,
+      "concurrency": 320,
+      "rss_mb": 157.078125,
+      "contention": {
+        "active_peak": 113.0,
+        "responses_delta": 2012434.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 39687.06,
+      "p50_ms": 10.78,
+      "p99_ms": 12.13,
+      "requests": 396870,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 140.30078125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 531636.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 64,
+        "reactor_count": 6
+      },
+      "throughput_rps": 42176.86,
+      "p50_ms": 12.91,
+      "p99_ms": 14.91,
+      "requests": 421768,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 139.6875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 814701.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 64,
+        "reactor_count": 25
+      },
+      "throughput_rps": 19339.23,
+      "p50_ms": 20.63,
+      "p99_ms": 25.1,
+      "requests": 193392,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 144.80078125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 281796.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 36470.45,
+      "p50_ms": 11.1,
+      "p99_ms": 12.72,
+      "requests": 364704,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 141.40625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 685114.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 1024,
+        "reactor_count": 6
+      },
+      "throughput_rps": 63595.18,
+      "p50_ms": 1.69,
+      "p99_ms": 12.93,
+      "requests": 635951,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 141.23046875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 1133578.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 1024,
+        "reactor_count": 25
+      },
+      "throughput_rps": 34054.67,
+      "p50_ms": 13.21,
+      "p99_ms": 15.97,
+      "requests": 340546,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 146.20703125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 769350.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 19503.45,
+      "p50_ms": 20.23,
+      "p99_ms": 23.57,
+      "requests": 195034,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 142.11328125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 264539.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 4096,
+        "reactor_count": 6
+      },
+      "throughput_rps": 52782.38,
+      "p50_ms": 3.9,
+      "p99_ms": 16.04,
+      "requests": 527823,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 143.00390625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 998733.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 4096,
+        "reactor_count": 25
+      },
+      "throughput_rps": 49187.15,
+      "p50_ms": 8.37,
+      "p99_ms": 18.38,
+      "requests": 491871,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 148.09765625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 899179.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 71009.75,
+      "p50_ms": 5.65,
+      "p99_ms": 12.21,
+      "requests": 710097,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 153.61328125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 949553.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 16384,
+        "reactor_count": 6
+      },
+      "throughput_rps": 76783.99,
+      "p50_ms": 2.16,
+      "p99_ms": 15.6,
+      "requests": 767839,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 153.64453125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 1126780.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 200,
+        "payload_bytes": 16384,
+        "reactor_count": 25
+      },
+      "throughput_rps": 40407.75,
+      "p50_ms": 11.99,
+      "p99_ms": 15.11,
+      "requests": 404077,
+      "errors": 0,
+      "concurrency": 400,
+      "rss_mb": 158.6171875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 725042.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 64,
+        "reactor_count": 1
+      },
+      "throughput_rps": 19325.75,
+      "p50_ms": 26.15,
+      "p99_ms": 30.17,
+      "requests": 193257,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 140.15234375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 259725.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 64,
+        "reactor_count": 8
+      },
+      "throughput_rps": 37288.09,
+      "p50_ms": 14.87,
+      "p99_ms": 16.03,
+      "requests": 372880,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 140.54296875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 834086.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 64,
+        "reactor_count": 32
+      },
+      "throughput_rps": 30358.7,
+      "p50_ms": 17.07,
+      "p99_ms": 20.62,
+      "requests": 303587,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 146.7265625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 763074.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 1024,
+        "reactor_count": 1
+      },
+      "throughput_rps": 36350.14,
+      "p50_ms": 13.93,
+      "p99_ms": 16.26,
+      "requests": 363501,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 141.21484375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 516379.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 1024,
+        "reactor_count": 8
+      },
+      "throughput_rps": 64985.17,
+      "p50_ms": 2.09,
+      "p99_ms": 16.14,
+      "requests": 649851,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 142.2109375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 1019218.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 1024,
+        "reactor_count": 32
+      },
+      "throughput_rps": 37820.54,
+      "p50_ms": 14.99,
+      "p99_ms": 18.94,
+      "requests": 378205,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 148.18359375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 515308.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 4096,
+        "reactor_count": 1
+      },
+      "throughput_rps": 19593.87,
+      "p50_ms": 26.11,
+      "p99_ms": 28.66,
+      "requests": 195938,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 141.90234375,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 275764.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 4096,
+        "reactor_count": 8
+      },
+      "throughput_rps": 39278.03,
+      "p50_ms": 15.26,
+      "p99_ms": 18.24,
+      "requests": 392780,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 143.421875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 841052.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 4096,
+        "reactor_count": 32
+      },
+      "throughput_rps": 40230.64,
+      "p50_ms": 14.84,
+      "p99_ms": 18.35,
+      "requests": 402306,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 150.17578125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 841422.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 16384,
+        "reactor_count": 1
+      },
+      "throughput_rps": 103838.31,
+      "p50_ms": 1.46,
+      "p99_ms": 15.44,
+      "requests": 1038383,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 154.046875,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 1280985.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 16384,
+        "reactor_count": 8
+      },
+      "throughput_rps": 43643.84,
+      "p50_ms": 14.91,
+      "p99_ms": 16.49,
+      "requests": 436438,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 154.28515625,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 782788.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    },
+    {
+      "cell": {
+        "model": "reactor",
+        "workers": 256,
+        "payload_bytes": 16384,
+        "reactor_count": 32
+      },
+      "throughput_rps": 40541.37,
+      "p50_ms": 14.97,
+      "p99_ms": 18.38,
+      "requests": 405413,
+      "errors": 0,
+      "concurrency": 512,
+      "rss_mb": 160.5703125,
+      "contention": {
+        "active_peak": 128.0,
+        "responses_delta": 749636.0,
+        "responses_5xx_delta": 0.0,
+        "pool_exposed": false,
+        "pool_deltas": {
+          "hyperdjango_pool_waiters": null,
+          "hyperdjango_pool_max_waiters": null,
+          "hyperdjango_pool_acquires": null,
+          "hyperdjango_pool_timeouts": null,
+          "hyperdjango_pool_in_use_connections": null
+        }
+      },
+      "profile": {
+        "tool": "perf",
+        "note": "perf stat produced no parseable counters",
+        "counters": {},
+        "artifact_path": null
+      }
+    }
+  ],
+  "verdict": {
+    "negative_scaling_flags": [
+      {
+        "series": "reactor 1KiB rc=1",
+        "w_from": 32,
+        "w_to": 64,
+        "rps_from": 294325.99,
+        "rps_to": 20933.84,
+        "drop_frac": 0.9288753263006096,
+        "causes": [
+          "p99 +15.2x"
+        ]
+      },
+      {
+        "series": "threaded 4KiB",
+        "w_from": 96,
+        "w_to": 128,
+        "rps_from": 261293.14,
+        "rps_to": 19053.64,
+        "drop_frac": 0.9270794480100013,
+        "causes": [
+          "p99 +14.3x"
+        ]
+      },
+      {
+        "series": "reactor 4KiB rc=1",
+        "w_from": 64,
+        "w_to": 96,
+        "rps_from": 262939.36,
+        "rps_to": 19800.11,
+        "drop_frac": 0.9246970480189806,
+        "causes": [
+          "p99 +18.2x"
+        ]
+      },
+      {
+        "series": "reactor 16KiB rc=1",
+        "w_from": 32,
+        "w_to": 64,
+        "rps_from": 208611.63,
+        "rps_to": 21059.93,
+        "drop_frac": 0.8990471911848826,
+        "causes": [
+          "p99 +10.9x"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=2",
+        "w_from": 16,
+        "w_to": 64,
+        "rps_from": 205699.19,
+        "rps_to": 21837.64,
+        "drop_frac": 0.8938370151092961,
+        "causes": [
+          "p99 +8.5x"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=8",
+        "w_from": 64,
+        "w_to": 256,
+        "rps_from": 264203.47,
+        "rps_to": 37288.09,
+        "drop_frac": 0.8588660095948021,
+        "causes": [
+          "p99 +28.6x"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=4",
+        "w_from": 32,
+        "w_to": 128,
+        "rps_from": 298586.5,
+        "rps_to": 43341.93,
+        "drop_frac": 0.8548429684530279,
+        "causes": [
+          "p99 +19.8x"
+        ]
+      },
+      {
+        "series": "reactor 4KiB rc=8",
+        "w_from": 64,
+        "w_to": 256,
+        "rps_from": 258165.56,
+        "rps_to": 39278.03,
+        "drop_frac": 0.8478572045008637,
+        "causes": [
+          "p99 +32.0x"
+        ]
+      },
+      {
+        "series": "reactor 1KiB rc=4",
+        "w_from": 32,
+        "w_to": 128,
+        "rps_from": 276598.76,
+        "rps_to": 44673.01,
+        "drop_frac": 0.8384916476125923,
+        "causes": [
+          "p99 +14.7x"
+        ]
+      },
+      {
+        "series": "threaded 16KiB",
+        "w_from": 200,
+        "w_to": 256,
+        "rps_from": 182960.03,
+        "rps_to": 37063.51,
+        "drop_frac": 0.7974229125345027,
+        "causes": [
+          "p99 +5.2x"
+        ]
+      },
+      {
+        "series": "reactor 4KiB rc=4",
+        "w_from": 32,
+        "w_to": 128,
+        "rps_from": 266701.57,
+        "rps_to": 54280.88,
+        "drop_frac": 0.7964733390958291,
+        "causes": [
+          "p99 +15.4x"
+        ]
+      },
+      {
+        "series": "reactor 16KiB rc=1",
+        "w_from": 96,
+        "w_to": 128,
+        "rps_from": 184796.79,
+        "rps_to": 41561.11,
+        "drop_frac": 0.7750983120431907,
+        "causes": [
+          "p99 +6.8x"
+        ]
+      },
+      {
+        "series": "reactor 16KiB rc=8",
+        "w_from": 64,
+        "w_to": 256,
+        "rps_from": 176681.24,
+        "rps_to": 43643.84,
+        "drop_frac": 0.7529797730647577,
+        "causes": [
+          "p99 +20.6x"
+        ]
+      },
+      {
+        "series": "threaded 1KiB",
+        "w_from": 128,
+        "w_to": 160,
+        "rps_from": 75807.73,
+        "rps_to": 19271.01,
+        "drop_frac": 0.745790963533666,
+        "causes": [
+          "p99 +1.8x"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=1",
+        "w_from": 64,
+        "w_to": 96,
+        "rps_from": 279036.4,
+        "rps_to": 89392.95,
+        "drop_frac": 0.679636957758916,
+        "causes": [
+          "p99 +10.1x"
+        ]
+      },
+      {
+        "series": "threaded 16KiB",
+        "w_from": 128,
+        "w_to": 160,
+        "rps_from": 138765.59,
+        "rps_to": 45097.75,
+        "drop_frac": 0.6750076874245264,
+        "causes": [
+          "p99 +1.0x"
+        ]
+      },
+      {
+        "series": "threaded 64B",
+        "w_from": 96,
+        "w_to": 128,
+        "rps_from": 260136.14,
+        "rps_to": 87219.58,
+        "drop_frac": 0.6647156369737783,
+        "causes": [
+          "p99 +7.2x"
+        ]
+      },
+      {
+        "series": "threaded 1KiB",
+        "w_from": 64,
+        "w_to": 96,
+        "rps_from": 257865.47,
+        "rps_to": 99993.57,
+        "drop_frac": 0.612225824574341,
+        "causes": [
+          "p99 +6.4x"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=1",
+        "w_from": 96,
+        "w_to": 128,
+        "rps_from": 89392.95,
+        "rps_to": 36799.64,
+        "drop_frac": 0.5883384539832279,
+        "causes": [
+          "p99 +1.5x"
+        ]
+      },
+      {
+        "series": "reactor 16KiB rc=1",
+        "w_from": 128,
+        "w_to": 160,
+        "rps_from": 41561.11,
+        "rps_to": 18716.84,
+        "drop_frac": 0.5496549538739461,
+        "causes": [
+          "p99 +2.5x"
+        ]
+      },
+      {
+        "series": "reactor 16KiB rc=4",
+        "w_from": 32,
+        "w_to": 128,
+        "rps_from": 197552.6,
+        "rps_to": 95704.99,
+        "drop_frac": 0.5155467961444192,
+        "causes": [
+          "p99 +13.6x"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=1",
+        "w_from": 200,
+        "w_to": 256,
+        "rps_from": 39687.06,
+        "rps_to": 19325.75,
+        "drop_frac": 0.5130465698391364,
+        "causes": [
+          "p99 +2.5x"
+        ]
+      },
+      {
+        "series": "reactor 4KiB rc=1",
+        "w_from": 160,
+        "w_to": 200,
+        "rps_from": 37123.44,
+        "rps_to": 19503.45,
+        "drop_frac": 0.474632469404775,
+        "causes": [
+          "p99 +2.4x"
+        ]
+      },
+      {
+        "series": "threaded 64B",
+        "w_from": 128,
+        "w_to": 160,
+        "rps_from": 87219.58,
+        "rps_to": 47469.34,
+        "drop_frac": 0.45574904167160635,
+        "causes": [
+          "p99 +1.2x"
+        ]
+      },
+      {
+        "series": "threaded 1KiB",
+        "w_from": 200,
+        "w_to": 256,
+        "rps_from": 59352.71,
+        "rps_to": 36488.07,
+        "drop_frac": 0.3852332943179848,
+        "causes": [
+          "no OS counters (profiler absent) \u2014 collapse inferred from rps drop"
+        ]
+      },
+      {
+        "series": "threaded 16KiB",
+        "w_from": 96,
+        "w_to": 128,
+        "rps_from": 196628.72,
+        "rps_to": 138765.59,
+        "drop_frac": 0.2942760854060384,
+        "causes": [
+          "p99 +5.9x"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=1",
+        "w_from": 160,
+        "w_to": 200,
+        "rps_from": 53441.24,
+        "rps_to": 39687.06,
+        "drop_frac": 0.2573701508423083,
+        "causes": [
+          "p99 +1.3x"
+        ]
+      },
+      {
+        "series": "threaded 1KiB",
+        "w_from": 96,
+        "w_to": 128,
+        "rps_from": 99993.57,
+        "rps_to": 75807.73,
+        "drop_frac": 0.24187395249514554,
+        "causes": [
+          "p99 +1.6x"
+        ]
+      },
+      {
+        "series": "threaded 64B",
+        "w_from": 8,
+        "w_to": 16,
+        "rps_from": 122649.17,
+        "rps_to": 110450.16,
+        "drop_frac": 0.09946263802682069,
+        "causes": [
+          "no OS counters (profiler absent) \u2014 collapse inferred from rps drop"
+        ]
+      },
+      {
+        "series": "reactor 64B rc=1",
+        "w_from": 32,
+        "w_to": 64,
+        "rps_from": 307081.04,
+        "rps_to": 279036.4,
+        "drop_frac": 0.09132651107342855,
+        "causes": [
+          "p99 +1.3x"
+        ]
+      },
+      {
+        "series": "reactor 4KiB rc=1",
+        "w_from": 32,
+        "w_to": 64,
+        "rps_from": 279411.06,
+        "rps_to": 262939.36,
+        "drop_frac": 0.058951496050299555,
+        "causes": [
+          "p99 +1.3x"
+        ]
+      },
+      {
+        "series": "threaded 64B",
+        "w_from": 160,
+        "w_to": 200,
+        "rps_from": 47469.34,
+        "rps_to": 45030.98,
+        "drop_frac": 0.05136705081637945,
+        "causes": [
+          "no OS counters (profiler absent) \u2014 collapse inferred from rps drop"
+        ]
+      }
+    ],
+    "flag_lines": [
+      "W=32->64 reactor 1KiB rc=1: 294k->21k (-93%)  [p99 +15.2x]",
+      "W=96->128 threaded 4KiB: 261k->19k (-93%)  [p99 +14.3x]",
+      "W=64->96 reactor 4KiB rc=1: 263k->20k (-92%)  [p99 +18.2x]",
+      "W=32->64 reactor 16KiB rc=1: 209k->21k (-90%)  [p99 +10.9x]",
+      "W=16->64 reactor 64B rc=2: 206k->22k (-89%)  [p99 +8.5x]",
+      "W=64->256 reactor 64B rc=8: 264k->37k (-86%)  [p99 +28.6x]",
+      "W=32->128 reactor 64B rc=4: 299k->43k (-85%)  [p99 +19.8x]",
+      "W=64->256 reactor 4KiB rc=8: 258k->39k (-85%)  [p99 +32.0x]",
+      "W=32->128 reactor 1KiB rc=4: 277k->45k (-84%)  [p99 +14.7x]",
+      "W=200->256 threaded 16KiB: 183k->37k (-80%)  [p99 +5.2x]",
+      "W=32->128 reactor 4KiB rc=4: 267k->54k (-80%)  [p99 +15.4x]",
+      "W=96->128 reactor 16KiB rc=1: 185k->42k (-78%)  [p99 +6.8x]",
+      "W=64->256 reactor 16KiB rc=8: 177k->44k (-75%)  [p99 +20.6x]",
+      "W=128->160 threaded 1KiB: 76k->19k (-75%)  [p99 +1.8x]",
+      "W=64->96 reactor 64B rc=1: 279k->89k (-68%)  [p99 +10.1x]",
+      "W=128->160 threaded 16KiB: 139k->45k (-68%)  [p99 +1.0x]",
+      "W=96->128 threaded 64B: 260k->87k (-66%)  [p99 +7.2x]",
+      "W=64->96 threaded 1KiB: 258k->100k (-61%)  [p99 +6.4x]",
+      "W=96->128 reactor 64B rc=1: 89k->37k (-59%)  [p99 +1.5x]",
+      "W=128->160 reactor 16KiB rc=1: 42k->19k (-55%)  [p99 +2.5x]",
+      "W=32->128 reactor 16KiB rc=4: 198k->96k (-52%)  [p99 +13.6x]",
+      "W=200->256 reactor 64B rc=1: 40k->19k (-51%)  [p99 +2.5x]",
+      "W=160->200 reactor 4KiB rc=1: 37k->20k (-47%)  [p99 +2.4x]",
+      "W=128->160 threaded 64B: 87k->47k (-46%)  [p99 +1.2x]",
+      "W=200->256 threaded 1KiB: 59k->36k (-39%)  [no OS counters (profiler absent) \u2014 collapse inferred from rps drop]",
+      "W=96->128 threaded 16KiB: 197k->139k (-29%)  [p99 +5.9x]",
+      "W=160->200 reactor 64B rc=1: 53k->40k (-26%)  [p99 +1.3x]",
+      "W=96->128 threaded 1KiB: 100k->76k (-24%)  [p99 +1.6x]",
+      "W=8->16 threaded 64B: 123k->110k (-10%)  [no OS counters (profiler absent) \u2014 collapse inferred from rps drop]",
+      "W=32->64 reactor 64B rc=1: 307k->279k (-9%)  [p99 +1.3x]",
+      "W=32->64 reactor 4KiB rc=1: 279k->263k (-6%)  [p99 +1.3x]",
+      "W=160->200 threaded 64B: 47k->45k (-5%)  [no OS counters (profiler absent) \u2014 collapse inferred from rps drop]"
+    ]
+  }
+}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Automod Rules — /f/{{ forum.name }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Automod Rules — /f/{{ forum.name }}</h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if rules %}
+    <table class="automod-table">
+        <thead>
+            <tr>
+                <th>Trigger</th>
+                <th>Condition</th>
+                <th>Action</th>
+                <th>Status</th>
+                <th>Created By</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="automod-rules">
+            {% for rule in rules %}
+            <tr id="rule-{{ rule.id }}">
+                <td>{{ rule.trigger }}</td>
+                <td><code>{{ rule.condition }}</code></td>
+                <td>{{ rule.action }}</td>
+                <td>
+                    {% if rule.is_active %}
+                    <span class="badge-active">Active</span>
+                    {% else %}
+                    <span class="badge-inactive">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>{{ rule.created_by_name }}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline"
+                            hx-post="/f/{{ forum.name }}/automod/{{ rule.id }}/toggle"
+                            hx-vals='{"_csrf_token": "{{ csrf_token }}"}'
+                            hx-target="#rule-{{ rule.id }}"
+                            hx-swap="outerHTML">
+                        {% if rule.is_active %}Deactivate{% else %}Activate{% endif %}
+                    </button>
+                    <button class="btn btn-sm btn-outline"
+                            hx-delete="/f/{{ forum.name }}/automod/{{ rule.id }}"
+                            hx-vals='{"_csrf_token": "{{ csrf_token }}"}'
+                            hx-target="#rule-{{ rule.id }}"
+                            hx-swap="outerHTML"
+                            hx-confirm="Delete this rule?">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">No automod rules configured yet.</p>
+    {% endif %}
+
+    <h3>Create New Rule</h3>
+    <form method="post" action="/f/{{ forum.name }}/automod" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="trigger">Trigger</label>
+            <select id="trigger" name="trigger" required>
+                <option value="">— Select trigger —</option>
+                <option value="new_post">New Post</option>
+                <option value="new_comment">New Comment</option>
+                <option value="report_threshold">Report Threshold</option>
+                <option value="keyword_match">Keyword Match</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="action">Action</label>
+            <select id="action" name="action" required>
+                <option value="">— Select action —</option>
+                <option value="remove">Remove</option>
+                <option value="flag">Flag for Review</option>
+                <option value="notify_mods">Notify Moderators</option>
+                <option value="ban_user">Ban User</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="condition">Condition <span class="optional">(JSON)</span></label>
+            <textarea id="condition" name="condition" rows="3" placeholder='{"keywords": ["spam", "scam"], "threshold": 3}'></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Rule</button>
+    </form>
+</div>
+{% endblock %}

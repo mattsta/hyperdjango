@@ -1,0 +1,11 @@
+{% for award in awards %}
+{% if award.count > 0 %}
+<span class="award-badge award-{{ award.award_type }}">
+    {% if award.award_type == 'insightful' %}💡{% endif %}
+    {% if award.award_type == 'well_written' %}✍️{% endif %}
+    {% if award.award_type == 'helpful' %}🤝{% endif %}
+    {% if award.award_type == 'funny' %}😄{% endif %}
+    {{ award.count }}
+</span>
+{% endif %}
+{% endfor %}

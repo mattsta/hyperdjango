@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Tickets{% endblock %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h1 style="font-size: 1.3rem;">Tickets</h1>
+    <a href="/tickets/new" class="btn" style="text-decoration: none; color: white;">New Ticket</a>
+</div>
+
+{% if tickets %}
+<table>
+    <thead><tr><th>#</th><th>Title</th><th>Category</th><th>Priority</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for t in tickets %}
+    <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.title }}</td>
+        <td>{{ t.category }}</td>
+        <td>{{ t.priority }}</td>
+        <td>{% if t.is_urgent %}Urgent{% else %}Normal{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="muted" style="text-align: center; padding: 2rem;">No tickets yet. <a href="/tickets/new">Create one</a>.</p>
+{% endif %}
+{% endblock %}

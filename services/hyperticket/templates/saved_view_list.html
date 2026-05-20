@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Saved Views — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>Saved Views</h2>
+<div class="card">
+    {% if saved_views %}
+    <table>
+        <thead><tr><th>Name</th><th>Type</th><th>Sort</th></tr></thead>
+        <tbody>
+            {% for v in saved_views %}
+            <tr>
+                <td><a href="/tickets/?view={{ v.id }}">{{ v.name }}</a></td>
+                <td>{{ "Shared" if v.agent_id == 0 else "Personal" }}</td>
+                <td>{{ v.sort_order }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:#6b7280">No saved views yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

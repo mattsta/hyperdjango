@@ -1,0 +1,215 @@
+name: CI
+
+# Structure: every validation is its own named stage, and the `test` job is a
+# platform matrix — all platforms run the IDENTICAL steps by construction.
+# Shared machinery lives in composite actions so it cannot drift per-job:
+#   .github/actions/setup-toolchain — Zig (pinned+SHA) / uv / Python 3.14t /
+#                                     deps / native build / import check
+#   .github/actions/setup-postgres  — native PostgreSQL 18 + pgvector
+#                                     (no containers, works on every OS)
+# Release (.github/workflows/release.yml) consumes the same toolchain action,
+# so wheels ship from the exact toolchain CI tested.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Platform-independent, so it runs exactly once. Rules come from
+  # pyproject.toml [tool.ruff] + the uv.lock-pinned ruff — same as
+  # `make lint` locally.
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+
+      - name: Install Python 3.14t (free-threaded)
+        run: uv python install 3.14t
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Ruff check
+        run: uv run ruff check
+
+      # Source-invariant enforcement gates (getattr, os.environ, swallowed
+      # exceptions, error-contract, dead settings, and the panic-prone
+      # std.posix socket-syscall gate). They check source text only — no build
+      # or DB — so they belong here, and they BLOCK a regression at commit time
+      # instead of it being discovered one CI run later. (Previously these
+      # lived in tests/ root and never ran in CI.)
+      - name: Source-invariant gates
+        run: >-
+          uv run pytest tests/test_no_*.py tests/test_error_contract.py
+          -p no:django --override-ini="DJANGO_SETTINGS_MODULE=" -q
+
+  # ── Progressive test ladder ──────────────────────────────────────────────
+  # The same sources run under increasing safety, cheapest-diagnostic first:
+  #
+  #   test-safe   (rung 1) ReleaseSafe, Linux x86+arm. Zig's bounds/overflow/UB
+  #               checks stay ON — an out-of-bounds store or overflow surfaces
+  #               as a clean Zig panic with a stack trace instead of the silent
+  #               heap smash + glibc "double free or corruption" abort a
+  #               ReleaseFast build would produce. Linux-only because that is
+  #               where the multicore races open and the runners have the cores
+  #               to exercise them (macOS-latest is ~3 cores).
+  #   test       (rung 2) ReleaseFast, all platforms — the production artifact.
+  #               Runs CONCURRENTLY with rung 1, not after it. Gating saved
+  #               runner minutes on the rare run where rung 1 fails, and cost
+  #               wall-clock on every other one: a rung-2-only failure could
+  #               not even be SEEN until rung 1 had finished, turning each
+  #               diagnosis into a ~20 minute serial cycle. Feedback latency
+  #               is the scarcer resource here — a red rung 1 still tells you
+  #               to read its panic first, and the ordering of the two reports
+  #               costs nothing to reason about.
+  #
+  # Both rungs run the IDENTICAL suite via the run-suite composite; only the
+  # native build mode differs. A deeper rung (DebugAllocator / TSan over the
+  # concurrency+memory stress subset, to catch c_allocator double-free/UAF that
+  # even ReleaseSafe misses) is a natural next addition once its instrumented
+  # build is wired.
+  test-safe:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      # Auth is trust (CI-only, server private to the job) — the password is
+      # ignored, but scripts that interpolate PGPASSWORD into URLs expect it.
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v6
+      - name: Toolchain — ReleaseSafe (Zig safety checks ON)
+        uses: ./.github/actions/setup-toolchain
+        with:
+          build-mode: safe
+      - name: Run suite
+        uses: ./.github/actions/run-suite
+        with:
+          artifact-suffix: safe-${{ matrix.os }}
+
+  # Deepest rung of the always-on ladder: ReleaseSafe + the safety-checking
+  # DebugAllocator over the memory/concurrency STRESS subset. Catches the
+  # c_allocator double-free / use-after-free / out-of-bounds class even
+  # ReleaseSafe alone misses (raw malloc/free bypasses Zig's safety) — the class
+  # behind the pinned-slot double-release. The DebugAllocator is portable
+  # (compiled in, needs no special interpreter), so it runs on EVERY platform,
+  # not just where the race opens — a deterministic double-free traps anywhere.
+  #
+  # Heavier per-platform checkers that need their own toolchain (Valgrind on
+  # Linux, a --with-thread-sanitizer CPython for real TSan, Guard Malloc on
+  # macOS) live in .github/workflows/deep-validation.yml — opt-in / scheduled,
+  # so they never block a PR while their infrastructure is being proven out.
+  test-sanitized:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v6
+      - name: Toolchain — ReleaseSafe + DebugAllocator (heap-safety)
+        uses: ./.github/actions/setup-toolchain
+        with:
+          build-mode: safe
+          heap-safety: "true"
+      - name: PostgreSQL 18 + pgvector
+        uses: ./.github/actions/setup-postgres
+      - name: Ensure required PostgreSQL extensions
+        run: |
+          DATABASE_URL=postgres://postgres@localhost:5432/template1 \
+            uv run hyper db extensions ensure
+          DATABASE_URL=postgres://postgres@localhost:5432/hyperdjango_test \
+            uv run hyper db extensions ensure
+      # These exercise the pool/connection path, whose allocations flow through
+      # db.zig's allocator (now the DebugAllocator) — so a double-free / UAF /
+      # OOB there traps at the free() site with a stack trace. native_results_
+      # stress is deliberately excluded: it is an RSS-slope leak test, and the
+      # allocator's per-allocation bookkeeping inflates the baseline enough to
+      # trip that heuristic (a false positive, not corruption).
+      - name: Memory/concurrency stress under the safety allocator
+        run: |
+          uv run hyper-test pinned_conns_r9 upstream_sync connection_timeout --no-log
+          uv run pytest tests/test_standalone/test_native_concurrency_stress.py \
+            -p no:django --override-ini="DJANGO_SETTINGS_MODULE=" -q
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-logs-sanitized-${{ matrix.os }}
+          path: logs/test_runs/
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v6
+      - name: Toolchain — ReleaseFast (production)
+        uses: ./.github/actions/setup-toolchain
+        with:
+          build-mode: release
+      - name: Run suite
+        uses: ./.github/actions/run-suite
+        with:
+          artifact-suffix: release-${{ matrix.os }}
+
+  build-sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+
+      - name: Install Python 3.14t
+        run: uv python install 3.14t
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Build sdist
+        run: uv build --sdist
+
+      - name: Build wheel
+        run: uv build --wheel
+
+      - name: Verify sdist contents
+        run: |
+          tar tzf dist/hyperdjango-*.tar.gz | grep "zig/src/main.zig"
+          tar tzf dist/hyperdjango-*.tar.gz | grep "zig/build.zig"
+          tar tzf dist/hyperdjango-*.tar.gz | grep "pyproject.toml"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/

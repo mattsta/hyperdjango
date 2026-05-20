@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HyperAI{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/htmx.min.js"></script>
+    <script src="/static/htmx-sse.js"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">HyperAI</h1>
+                <a href="/chat/new" class="btn btn-new-chat">+ New Chat</a>
+            </div>
+            <nav class="conversation-list">
+                {% for conv in conversations %}
+                <a href="/chat/{{ conv.cid }}"
+                   class="conversation-item {% if conversation and conversation.id == conv.id %}active{% endif %}">
+                    <span class="conv-title">{{ conv.title }}</span>
+                    <span class="conv-model">{{ conv.model_name }}</span>
+                </a>
+                {% endfor %}
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="user-name">{{ user.username }}</span>
+                    <span class="user-tier tier-{{ user.tier }}">{{ user.tier }}</span>
+                </div>
+                <div class="sidebar-links">
+                    <a href="/">Dashboard</a>
+                    <a href="/account">Account</a>
+                    <form method="post" action="/logout" class="inline-form">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn-link">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

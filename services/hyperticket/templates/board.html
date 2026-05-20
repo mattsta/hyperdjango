@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Board — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>Ticket Board</h2>
+<div style="display:flex;gap:1rem;overflow-x:auto;padding-bottom:1rem">
+    {% for col in columns %}
+    <div style="min-width:250px;flex-shrink:0">
+        <div style="padding:0.5rem;background:{{ col.status.color }}20;border-radius:8px 8px 0 0;border-bottom:3px solid {{ col.status.color }}">
+            <strong>{{ col.status.label }}</strong>
+            <span class="badge" style="background:{{ col.status.color }};color:#fff;margin-left:0.25rem">{{ col.count }}</span>
+        </div>
+        <div style="background:#f9fafb;padding:0.5rem;border-radius:0 0 8px 8px;min-height:200px">
+            {% for ticket in col.tickets %}
+            <div class="card" style="padding:0.75rem;margin-bottom:0.5rem">
+                <a href="/tickets/{{ ticket.id }}" style="font-weight:500;text-decoration:none;color:#1a73e8">{{ ticket.ticket_number }}</a>
+                <div style="font-size:0.8rem;margin-top:0.25rem">{{ ticket.title | truncate(60) }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

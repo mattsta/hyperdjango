@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ project.name }}{% endblock %}
+{% block content %}
+<h2>{{ project.name }}</h2>
+{% if project.description %}<p class="muted">{{ project.description }}</p>{% endif %}
+
+<h3 style="margin-top:1.5rem;">Tasks</h3>
+
+<form method="POST" action="/projects/{{ project.id }}/tasks" style="display:flex;gap:0.5rem;margin-bottom:1rem;">
+    <input type="text" name="title" placeholder="New task..." style="flex:1;">
+    <button type="submit" class="btn">Add</button>
+</form>
+
+{% if tasks %}
+{% for t in tasks %}
+<div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+    <div>
+        <strong>{{ t.title }}</strong>
+        <span class="muted">({{ t.status.value if t.status.value is defined else t.status }})</span>
+    </div>
+    <div style="display:flex;gap:0.3rem;">
+        {% for s in statuses %}
+        <form method="POST" action="/tasks/{{ t.id }}/status" style="display:inline;">
+            <input type="hidden" name="status" value="{{ s }}">
+            <button type="submit" class="btn btn-sm">{{ s }}</button>
+        </form>
+        {% endfor %}
+        <form method="POST" action="/tasks/{{ t.id }}/delete" style="display:inline;">
+            <button type="submit" class="btn btn-sm btn-red">x</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p class="muted">No tasks yet.</p>
+{% endif %}
+
+<p style="margin-top:1rem;"><a href="/">&larr; Back to dashboard</a></p>
+{% endblock %}

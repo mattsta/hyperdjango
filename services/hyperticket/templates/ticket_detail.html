@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}{{ ticket.ticket_number }} — {{ site.name }}{% endblock %}
+{% block content %}
+<div style="display:flex;gap:1rem;align-items:flex-start">
+    <div style="flex:1">
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <h2>{{ ticket.ticket_number }}: {{ ticket.title }}</h2>
+                <div>
+                    {% if status %}
+                    <span class="badge" style="background:{{ status.color }};color:#fff">{{ status.label }}</span>
+                    {% endif %}
+                    {% if priority %}
+                    <span class="badge" style="background:{{ priority.color }};color:#fff">{{ priority.label }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% if ticket.description %}
+            <p style="margin-top:1rem;color:#4b5563">{{ ticket.description }}</p>
+            {% endif %}
+            <div style="margin-top:1rem;font-size:0.875rem;color:#6b7280">
+                {% if ticket_type %}<span>Type: {{ ticket_type.label }}</span> | {% endif %}
+                {% if assignee %}<span>Assignee: {{ assignee.display_name }}</span> | {% endif %}
+                {% if customer %}<span>Customer: {{ customer.display_name }}</span> | {% endif %}
+                <span>Created: {{ time_ago(ticket.created_at) }}</span>
+                {% if is_locked %} | <span style="color:#dc2626">Locked</span>{% endif %}
+                {% if is_muted %} | <span style="color:#6b7280">Muted</span>{% endif %}
+            </div>
+            {% if tags %}
+            <div style="margin-top:0.5rem">
+                {% for tag in tags %}
+                <span class="badge" style="background:{{ tag.color }};color:#fff">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h3>Comments</h3>
+            <div id="comments">
+                {% for comment in comments %}
+                <div style="padding:0.75rem 0;border-bottom:1px solid #e5e7eb{% if comment.is_internal %};background:#fffbeb{% endif %}">
+                    <div style="font-size:0.75rem;color:#6b7280">
+                        {{ comment.author_type }} #{{ comment.author_id }}
+                        {% if comment.is_internal %}<span class="badge" style="background:#f59e0b;color:#fff">Internal</span>{% endif %}
+                        — {{ time_ago(comment.created_at) }}
+                    </div>
+                    <div style="margin-top:0.25rem">{{ comment.body }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            <form method="post" action="/tickets/{{ ticket.id }}/comments" style="margin-top:1rem"
+                  hx-post="/tickets/{{ ticket.id }}/comments" hx-target="#comments" hx-swap="beforeend">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                <div class="form-group">
+                    <textarea name="body" placeholder="Add a comment..." required></textarea>
+                </div>
+                <div style="display:flex;gap:0.5rem;align-items:center">
+                    <label style="font-size:0.875rem">
+                        <input type="checkbox" name="is_internal" value="on"> Internal note
+                    </label>
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div style="width:250px">
+        <div class="card">
+            <h3 style="font-size:0.875rem;margin-bottom:0.75rem">Actions</h3>
+            {% if available_statuses %}
+            <div style="margin-bottom:0.5rem">
+                {% for s in available_statuses %}
+                <form method="post" action="/tickets/{{ ticket.id }}/edit" style="display:inline">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="status_id" value="{{ s.id }}">
+                </form>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form method="post" action="/tickets/{{ ticket.id }}/close" style="margin-bottom:0.5rem">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-danger" style="width:100%">Close</button>
+            </form>
+            <form method="post" action="/tickets/{{ ticket.id }}/reopen" style="margin-bottom:0.5rem">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-secondary" style="width:100%">Reopen</button>
+            </form>
+            <form method="post" action="/tickets/{{ ticket.id }}/lock" style="margin-bottom:0.5rem">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-secondary" style="width:100%">{{ "Unlock" if is_locked else "Lock" }}</button>
+            </form>
+            <form method="post" action="/tickets/{{ ticket.id }}/mute">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-secondary" style="width:100%">{{ "Unmute" if is_muted else "Mute" }}</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

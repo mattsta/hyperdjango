@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Crosspost — {{ post.title }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Crosspost</h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <p class="form-hint">
+        Crossposting <strong><a href="/post/{{ post.pid }}">{{ post.title }}</a></strong>
+        from <a href="/f/{{ post.forum_name }}/">f/{{ post.forum_name }}</a>.
+    </p>
+
+    <form method="post" action="/post/{{ post.pid }}/crosspost" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="target_forum">Target Forum</label>
+            <select id="target_forum" name="forum" required>
+                <option value="">Select a forum...</option>
+                {% for forum in forums %}
+                <option value="{{ forum.name }}">f/{{ forum.name }} — {{ forum.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crosspost</button>
+        <a href="/post/{{ post.pid }}" class="btn btn-sm btn-outline">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Portal — {{ site.name }}{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <h2>My Tickets</h2>
+    <a href="/portal/tickets/new" class="btn btn-primary">Submit a Request</a>
+</div>
+<div class="card">
+    {% if tickets %}
+    <table>
+        <thead><tr><th>#</th><th>Title</th><th>Status</th><th>Created</th></tr></thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td><a href="/portal/tickets/{{ ticket.id }}">{{ ticket.ticket_number }}</a></td>
+                <td><a href="/portal/tickets/{{ ticket.id }}">{{ ticket.title }}</a></td>
+                <td>{% if status_map[ticket.status_id] %}<span class="badge" style="background:{{ status_map[ticket.status_id].color }};color:#fff">{{ status_map[ticket.status_id].label }}</span>{% endif %}</td>
+                <td>{{ time_ago(ticket.created_at) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:#6b7280">No tickets yet. <a href="/portal/tickets/new">Submit your first request.</a></p>
+    {% endif %}
+</div>
+{% endblock %}

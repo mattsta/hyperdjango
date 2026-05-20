@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — {{ site.name }}{% endblock %}
+{% block content %}
+<h2>Dashboard</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
+    <div class="card" style="text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#1a73e8">{{ stats.total_tickets }}</div>
+        <div style="font-size:0.875rem;color:#6b7280">Total Tickets</div>
+    </div>
+    <div class="card" style="text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#22c55e">{{ stats.open_tickets }}</div>
+        <div style="font-size:0.875rem;color:#6b7280">Open</div>
+    </div>
+    <div class="card" style="text-align:center">
+        <div style="font-size:2rem;font-weight:700;color:#f59e0b">{{ stats.unassigned }}</div>
+        <div style="font-size:0.875rem;color:#6b7280">Unassigned</div>
+    </div>
+    <div class="card" style="text-align:center">
+        <div style="font-size:2rem;font-weight:700;{% if stats.sla_compliance_pct < 90 %}color:#dc2626{% else %}color:#22c55e{% endif %}">{{ stats.sla_compliance_pct }}%</div>
+        <div style="font-size:0.875rem;color:#6b7280">SLA Compliance</div>
+    </div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+    <div class="card">
+        <h3>Agent Performance</h3>
+        <div hx-get="/analytics/agents/" hx-trigger="load" hx-target="#agent-stats" hx-swap="innerHTML">
+            <div id="agent-stats"><em>Loading...</em></div>
+        </div>
+    </div>
+    <div class="card">
+        <h3>Team Queues</h3>
+        <div hx-get="/analytics/teams/" hx-trigger="load" hx-target="#team-stats" hx-swap="innerHTML">
+            <div id="team-stats"><em>Loading...</em></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

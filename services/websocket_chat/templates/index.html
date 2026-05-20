@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Rooms{% endblock %}
+{% block content %}
+<h2 style="margin: 1rem 0;">Chat Rooms</h2>
+
+<div class="card">
+    <h3 style="margin-bottom: 0.75rem;">Create Room</h3>
+    <form hx-post="/rooms/create"
+          hx-target="#room-tbody"
+          hx-swap="beforeend"
+          hx-on::after-request="if(event.detail.successful) this.reset()"
+          style="display: flex; gap: 0.5rem; align-items: end;">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <div style="flex: 1;">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required maxlength="100" placeholder="Room name">
+        </div>
+        <div style="flex: 2;">
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description" maxlength="200" placeholder="Optional description">
+        </div>
+        <button type="submit" class="btn">Create</button>
+    </form>
+</div>
+
+<div class="card" id="room-list">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 2px solid #eee; text-align: left;">
+                <th style="padding: 0.5rem;">Room</th>
+                <th style="padding: 0.5rem;">Description</th>
+                <th style="padding: 0.5rem;">Created</th>
+                <th style="padding: 0.5rem;"></th>
+            </tr>
+        </thead>
+        <tbody id="room-tbody">
+            {% for room in rooms %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 0.5rem; font-weight: 500;">{{ room.name }}</td>
+                <td style="padding: 0.5rem; color: #666;">{{ room.description }}</td>
+                <td style="padding: 0.5rem; color: #999; font-size: 0.85rem;">{{ room.created_at }}</td>
+                <td style="padding: 0.5rem;"><a href="/rooms/{{ room.id }}" class="btn btn-sm">Join</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if not rooms %}
+    <p style="text-align: center; color: #999; padding: 1rem 0;">No rooms yet. Create one above!</p>
+    {% endif %}
+</div>
+
+<p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">{{ room_count }} room{{ "s" if room_count != 1 else "" }}</p>
+{% endblock %}

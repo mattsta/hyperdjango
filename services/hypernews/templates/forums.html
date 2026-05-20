@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Forums — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="forum-directory">
+    <div class="page-header">
+        <h2>Forums</h2>
+        {% if user %}
+        <a href="/forums/create" class="btn btn-primary btn-sm">Create Forum</a>
+        {% endif %}
+    </div>
+
+    <div class="tab-nav">
+        <a href="/forums?sort=popular" class="tab {% if sort == 'popular' %}active{% endif %}">Popular</a>
+        <a href="/forums?sort=new" class="tab {% if sort == 'new' %}active{% endif %}">New</a>
+    </div>
+
+    {% if query %}
+    <p class="search-info">Search results for "{{ query }}"</p>
+    {% endif %}
+
+    <div class="forum-list">
+        {% for forum in forums %}
+        <div class="forum-card">
+            <div class="forum-card-header">
+                <a href="/f/{{ forum.name }}/" class="forum-name">f/{{ forum.name }}</a>
+                <span class="forum-title">{{ forum.title }}</span>
+            </div>
+            <p class="forum-description">{{ forum.description }}</p>
+            <div class="forum-stats">
+                <span>{{ forum.subscriber_count }} subscriber{{ 's' if forum.subscriber_count != 1 else '' }}</span>
+                <span class="sep">&middot;</span>
+                <span>{{ forum.post_count }} post{{ 's' if forum.post_count != 1 else '' }}</span>
+                <span class="sep">&middot;</span>
+                <span>created {{ forum.time_ago }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not forums %}
+    <p class="empty-state">No forums found. {% if user %}<a href="/forums/create">Create one!</a>{% endif %}</p>
+    {% endif %}
+
+    {% if next_cursor %}
+    <div class="pagination">
+        <a href="/forums?sort={{ sort }}&cursor={{ next_cursor }}" class="page-link">More &rarr;</a>
+    </div>
+    {% endif %}
+
+    <div class="forum-search-box">
+        <form action="/forums/search" method="get" class="inline-form">
+            <input type="text" name="q" placeholder="Search forums..." class="search-input">
+            <button type="submit" class="btn btn-sm">Search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

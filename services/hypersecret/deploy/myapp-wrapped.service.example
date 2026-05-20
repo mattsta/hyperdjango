@@ -1,0 +1,23 @@
+# Exec-wrapper pattern (portable to Docker ENTRYPOINT / Kubernetes): the
+# wrapper fetches + decrypts, injects env vars, and execs the real binary.
+# The application reads plain environment variables and never touches the
+# secrets client. Values exist only in this service's process environment —
+# nothing is written to disk.
+
+[Unit]
+Description=My app (secrets injected by secrets-run)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=myapp
+# HYPERSECRET_URL / HYPERSECRET_TOKEN / HYPERSECRET_NAMESPACE /
+# HYPERSECRET_KEK_FILE — this service's identity, distributed at deploy time.
+EnvironmentFile=/etc/hypersecret/myapp.env
+ExecStart=/opt/hyperdjango/.venv/bin/python -m services.hypersecret.secrets_run \
+    --map /etc/myapp/secrets.map -- /usr/local/bin/myapp --port 9000
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

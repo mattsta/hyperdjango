@@ -1,0 +1,7 @@
+.{
+    .name = .hyperdjango,
+    .version = "0.1.0",
+    .dependencies = .{},
+    .paths = .{""},
+    .fingerprint = 0xee16118e42d228f8,
+}

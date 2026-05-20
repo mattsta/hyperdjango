@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile.username }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="profile-header">
+        {% if profile.avatar_url %}
+        <img src="{{ profile.avatar_url }}" alt="{{ profile.username }}" class="profile-avatar">
+        {% endif %}
+        <div>
+            <h2>{{ profile.username }}
+                {% if profile.has_staff_status %}<span class="badge badge-staff">staff</span>{% endif %}
+            </h2>
+            {% if profile.display_name %}
+            <p class="profile-display-name">{{ profile.display_name }}</p>
+            {% endif %}
+            {% if profile.bio %}
+            <p class="profile-bio">{{ profile.bio }}</p>
+            {% endif %}
+            <div class="profile-stats">
+                <span class="stat"><strong>{{ profile.karma }}</strong> karma</span>
+                <span class="stat">joined {{ profile.created_at }}</span>
+                {% if profile.location %}
+                <span class="stat">{{ profile.location }}</span>
+                {% endif %}
+            </div>
+            <div class="profile-links">
+                {% if profile.website %}
+                <a href="{{ profile.website }}" rel="nofollow noopener" class="profile-link">website</a>
+                {% endif %}
+                {% if profile.github_username %}
+                <a href="https://github.com/{{ profile.github_username }}" rel="nofollow noopener" class="profile-link">github</a>
+                {% endif %}
+                <a href="/user/{{ profile.username }}/karma" class="profile-link">karma breakdown</a>
+            </div>
+        </div>
+    </div>
+
+    {% if forums %}
+    <div class="profile-section">
+        <h3>Forums</h3>
+        <div class="profile-forums">
+            {% for f in forums %}
+            <a href="/f/{{ f.name }}/" class="forum-badge">f/{{ f.name }}</a>
+            {% if f.role != 'subscriber' %}<span class="mod-role">({{ f.role }})</span>{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="profile-section">
+        <h3>Recent Posts</h3>
+        {% if recent_posts %}
+        <ul class="profile-list">
+            {% for post in recent_posts %}
+            <li>
+                <a href="/post/{{ post.pid }}">{{ post.title }}</a>
+                <span class="meta">{{ post.score }} points | {{ post.comment_count }} comments | {{ post.time_ago }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">No posts yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="profile-section">
+        <h3>Recent Comments</h3>
+        {% if recent_comments %}
+        <ul class="profile-list">
+            {% for comment in recent_comments %}
+            <li>
+                <a href="/post/{{ comment.post_pid }}#comment-{{ comment.id }}">{{ comment.text }}</a>
+                <span class="meta">{{ comment.score }} points | {{ comment.time_ago }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">No comments yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

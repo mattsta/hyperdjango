@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Create Forum — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Create a New Forum</h2>
+
+    {% if error %}
+    <div class="error-box">
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+
+    {% if errors %}
+    <div class="error-box">
+        {% for err in errors %}
+        <p>{{ err }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" action="/forums/create" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="name">Forum Name</label>
+            <input type="text" id="name" name="name" value="{{ name if name else '' }}"
+                   maxlength="30" required placeholder="e.g. python, rust, startups"
+                   pattern="[a-z0-9_-]+">
+            <p class="form-hint">Lowercase letters, numbers, hyphens, underscores only. This becomes the URL: /f/your-name/</p>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Display Title</label>
+            <input type="text" id="title" name="title" value="{{ title if title else '' }}"
+                   maxlength="100" required placeholder="e.g. Python Programming">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description <span class="optional">(optional)</span></label>
+            <textarea id="description" name="description" rows="4" placeholder="What is this forum about?">{{ description if description else '' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="rules">Rules <span class="optional">(optional)</span></label>
+            <textarea id="rules" name="rules" rows="4" placeholder="Community guidelines">{{ rules if rules else '' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Forum</button>
+    </form>
+</div>
+{% endblock %}

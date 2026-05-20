@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="font-size: 1.4rem; margin-bottom: 1rem;">HyperDjango Forms Demo</h1>
+<p style="margin-bottom: 1.5rem;">Showcasing the forms framework: validation, ModelForm, cross-field clean, error display.</p>
+
+<div class="card">
+    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Contact Form</h2>
+    <p class="muted">8 field types, cross-field validation (urgent requires due date), per-field clean.</p>
+    <a href="/contact" class="btn" style="display: inline-block; margin-top: 0.5rem; text-decoration: none; color: white;">Try it</a>
+</div>
+
+<div class="card">
+    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Registration Form</h2>
+    <p class="muted">Password confirmation via cross-field clean(), unique username check against DB.</p>
+    <a href="/register" class="btn" style="display: inline-block; margin-top: 0.5rem; text-decoration: none; color: white;">Try it</a>
+</div>
+
+<div class="card">
+    <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Ticket ModelForm</h2>
+    <p class="muted">Auto-generated from Ticket model — Enum→ChoiceField, type-mapped fields, save().</p>
+    <a href="/tickets/new" class="btn" style="display: inline-block; margin-top: 0.5rem; text-decoration: none; color: white;">Try it</a>
+</div>
+{% endblock %}

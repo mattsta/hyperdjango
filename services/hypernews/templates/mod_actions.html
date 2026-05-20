@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Mod Actions — {{ target_username }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="forum-page">
+    <div class="forum-header">
+        <h2>Mod Actions &mdash; <a href="/user/{{ target_username }}">{{ target_username }}</a></h2>
+    </div>
+
+    <table class="member-table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Forum</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th>Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in actions %}
+            <tr>
+                <td class="post-meta">{{ entry.created_at }}</td>
+                <td><a href="/f/{{ entry.forum_name }}/">f/{{ entry.forum_name }}</a></td>
+                <td><a href="/user/{{ entry.actor_name }}">{{ entry.actor_name }}</a></td>
+                <td>{{ entry.action }}</td>
+                <td>{{ entry.reason if entry.reason else '&mdash;' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if not actions %}
+    <p class="empty-state">No moderation actions found for this user.</p>
+    {% endif %}
+</div>
+{% endblock %}

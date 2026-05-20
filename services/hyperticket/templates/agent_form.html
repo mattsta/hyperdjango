@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Add Agent — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="card" style="max-width:400px">
+    <h2>Add Agent</h2>
+    {% if errors %}
+    <div class="errors"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>
+    {% endif %}
+    <form method="post" action="/agents/new">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="display_name">Display Name</label>
+            <input type="text" id="display_name" name="display_name" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required minlength="8">
+        </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" name="role">
+                <option value="agent">Agent</option>
+                <option value="team_lead">Team Lead</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Agent</button>
+    </form>
+</div>
+{% endblock %}

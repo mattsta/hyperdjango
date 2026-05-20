@@ -1,0 +1,21 @@
+{% if related_posts %}
+<div class="related-posts">
+    <h3>Related Posts</h3>
+    <ul>
+        {% for rp in related_posts[:5] %}
+        <li class="post-item">
+            <div class="post-content">
+                <div class="post-title-line">
+                    <a href="/post/{{ rp.pid }}" class="post-title">{{ rp.title }}</a>
+                </div>
+                <div class="post-meta">
+                    <span class="score">{{ rp.score }} point{{ 's' if rp.score != 1 else '' }}</span>
+                    <span class="sep">&middot;</span>
+                    <span>f/{{ rp.forum_name }}</span>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

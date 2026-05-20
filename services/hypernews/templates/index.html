@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.name }} — {{ tab }}{% endblock %}
+
+{% block content %}
+<div class="tab-nav">
+    <a href="/?tab=hot" class="tab {% if tab == 'hot' %}active{% endif %}">Hot</a>
+    <a href="/?tab=new" class="tab {% if tab == 'new' %}active{% endif %}">New</a>
+    <a href="/?tab=top" class="tab {% if tab == 'top' %}active{% endif %}">Top</a>
+    <a href="/?tab=controversial" class="tab {% if tab == 'controversial' %}active{% endif %}">Controversial</a>
+    <a href="/?tab=rising" class="tab {% if tab == 'rising' %}active{% endif %}">Rising</a>
+    <a href="/?tab=ask" class="tab {% if tab == 'ask' %}active{% endif %}">Ask</a>
+</div>
+
+<ol class="post-list" start="{{ posts[0].rank if posts else 1 }}">
+    {% for post in posts %}
+    <li class="post-item" id="post-{{ post.id }}">
+        <div class="post-vote">
+            {% if user %}
+            <button class="vote-btn upvote"
+                    hx-post="/vote"
+                    hx-vals='{"post_id": "{{ post.id }}", "direction": "up", "_csrf_token": "{{ csrf_token }}"}'
+                    hx-target="#score-post-{{ post.id }}"
+                    hx-swap="outerHTML"
+                    title="upvote">&#9650;</button>
+            {% else %}
+            <a href="/login" class="vote-btn upvote" title="login to vote">&#9650;</a>
+            {% endif %}
+        </div>
+        <div class="post-content">
+            <div class="post-title-line">
+                {% if post.url %}
+                    <a href="{{ post.url }}" class="post-title" rel="nofollow">{{ post.title }}</a>
+                    <span class="post-domain">({{ post.domain }})</span>
+                {% else %}
+                    <a href="/post/{{ post.pid }}" class="post-title">{{ post.title }}</a>
+                {% endif %}
+            </div>
+            <div class="post-meta">
+                <span class="score" id="score-post-{{ post.id }}">{{ post.score }} point{{ 's' if post.score != 1 else '' }}</span>
+                by <a href="/user/{{ post.author }}">{{ post.author }}</a>
+                {% if post.forum_name %}
+                in <a href="/f/{{ post.forum_name }}/" class="forum-badge">f/{{ post.forum_name }}</a>
+                {% endif %}
+                <span class="post-time">{{ post.time_ago }}</span>
+                |
+                <a href="/post/{{ post.pid }}">{{ post.comment_count }} comment{{ 's' if post.comment_count != 1 else '' }}</a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ol>
+
+{% if not posts %}
+<p class="empty-state">No posts yet. <a href="/submit">Be the first to submit!</a></p>
+{% endif %}
+
+<div class="pagination">
+    {% if prev_cursor %}
+        <a href="/?tab={{ tab }}" class="page-link">&#8592; First</a>
+    {% endif %}
+    {% if next_cursor %}
+        <a href="/?tab={{ tab }}&cursor={{ next_cursor }}" class="page-link">More &#8594;</a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+# HyperNews Site Configuration
+# Copy to site.toml and customize. All values are optional —
+# defaults match the standard HyperNews appearance.
+#
+# Environment variables override TOML values:
+#   HYPERNEWS_NAME="TechBoard" HYPERNEWS_THEME_PRIMARY="#3b82f6"
+
+name = "HyperNews"
+# tagline = "What's new in tech"
+logo_icon = "Y"
+# logo_url = "/static/logo.png"
+footer_text = "Powered by HyperDjango"
+font_family = "Verdana, Geneva, sans-serif"
+base_font_size = "13px"
+
+[theme]
+primary = "#ff6600"
+primary_dark = "#e55b00"
+background = "#f6f6ef"
+text = "#333333"
+text_secondary = "#828282"
+success = "#22c55e"
+warning = "#f59e0b"
+danger = "#dc2626"

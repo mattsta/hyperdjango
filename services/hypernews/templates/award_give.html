@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Give Award — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Give Award</h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="post-item">
+        <div class="post-content">
+            <div class="post-meta">Awarding a {{ target.type }}</div>
+            <div class="post-title-line">
+                {% if target.type == 'post' %}
+                <span class="post-title">{{ target.title }}</span>
+                {% else %}
+                <span class="post-title">{{ target.text }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <p class="post-meta">Your karma: <strong>{{ user_karma }}</strong></p>
+
+    <form method="post" action="/award" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        {% if target.type == 'post' %}
+        <input type="hidden" name="post_id" value="{{ target.id }}">
+        {% else %}
+        <input type="hidden" name="comment_id" value="{{ target.id }}">
+        {% endif %}
+
+        <div class="form-group">
+            <label>Award Type</label>
+            {% for award in award_types %}
+            <label class="radio-label">
+                <input type="radio" name="award_type" value="{{ award.value }}" required>
+                {{ award.label }} <span class="optional">({{ award.cost }} karma)</span>
+            </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Give Award</button>
+    </form>
+</div>
+{% endblock %}

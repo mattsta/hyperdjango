@@ -1,0 +1,5 @@
+<a href="/chat/{{ conv.cid }}"
+   class="conversation-item {% if conversation and conversation.id == conv.id %}active{% endif %}">
+    <span class="conv-title">{{ conv.title }}</span>
+    <span class="conv-model">{{ conv.model_name }}</span>
+</a>

@@ -1,0 +1,22 @@
+{% for ticket in tickets %}
+<tr>
+    <td><a href="/tickets/{{ ticket.id }}">{{ ticket.ticket_number }}</a></td>
+    <td><a href="/tickets/{{ ticket.id }}">{{ ticket.title }}</a></td>
+    <td>
+        {% if status_map[ticket.status_id] %}
+        <span class="badge" style="background:{{ status_map[ticket.status_id].color }};color:#fff">
+            {{ status_map[ticket.status_id].label }}
+        </span>
+        {% endif %}
+    </td>
+    <td>
+        {% if priority_map[ticket.priority_id] %}
+        <span class="badge" style="background:{{ priority_map[ticket.priority_id].color }};color:#fff">
+            {{ priority_map[ticket.priority_id].label }}
+        </span>
+        {% endif %}
+    </td>
+    <td>{{ ticket.assignee_id or "Unassigned" }}</td>
+    <td>{{ time_ago(ticket.created_at) }}</td>
+</tr>
+{% endfor %}

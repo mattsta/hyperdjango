@@ -1,0 +1,103 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hyperdjango"
+version = "0.18.0"
+description = "Hypermodern web framework with native Zig performance — Django-inspired API, compiled HTTP server, SIMD validation, native PostgreSQL"
+requires-python = ">=3.14"
+license = "MIT"
+dependencies = [
+    "argon2-cffi>=25.1.0",
+    "httpx>=0.28.1",
+    "hypothesis>=6.151.11",
+    "scheduler>=0.8.11",
+    "sortedcontainers>=2.4.0",
+]
+
+[project.scripts]
+hyper = "hyperdjango.cli:main"
+hyper-build = "hyperdjango.build:main"
+hyper-test = "hyperdjango.test_runner:main"
+hyper-bench = "benchmarks.http.run:main"
+
+[project.optional-dependencies]
+django = ["django>=5.0"]
+crypto = ["argon2-cffi>=21.0", "cryptography>=43"]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-django",
+    # IANA zone database as a package: zoneinfo falls back to it for any key
+    # the HOST tzdata lacks. Newer Debian/Ubuntu split legacy aliases (US/*)
+    # into tzdata-legacy, so zone availability silently varies per machine —
+    # observed as a formats-suite failure on a minimal server that passed on
+    # macOS and CI. Pinning the package makes zone lookups host-independent.
+    "tzdata",
+    "django>=5.0",
+    "psycopg>=3.1",
+    "argon2-cffi>=21.0",
+    "cryptography>=43",
+    "jinja2>=3.1",
+    "uvicorn>=0.30",
+    "asyncpg>=0.29",
+    "black>=26.3.1",
+    "hatchling>=1.25",
+    "mkdocs-material>=9.5",
+    "py-spy>=0.4.1",
+    "ruff>=0.15.11",
+]
+
+# Deps for the websocket benchmark/interop-compare suite (benchmarks/websocket/) —
+# NOT platform dependencies, only needed to run comparisons against the `websockets`
+# PyPI library and to profile memory during those comparison runs.
+benchmark-comparison = [
+    "websockets>=16.0",
+    "psutil>=7.2.2",
+    "pympler>=1.1",
+    # HTTP framework comparison (FastAPI/uvicorn = async, Flask/gunicorn = sync)
+    "fastapi>=0.115",
+    "uvicorn>=0.34",
+    "flask>=3.1",
+    "gunicorn>=23.0",
+    # Interactive benchmark dashboard (real charting lib, embedded inline in the
+    # HTML report — hover/zoom/legend-toggle/dropdown slicing/facets/log-scale).
+    "plotly>=5.24",
+]
+
+# ── Build configuration ──────────────────────────────────────────────────
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "hyperdjango/",
+    "zig/src/",
+    "zig/build.zig",
+    "zig/build.zig.zon",
+    "zig/build_hyperdjango.py",
+    "tests/",
+    "scripts/",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["hyperdjango"]
+artifacts = ["hyperdjango/*.so", "hyperdjango/*.dylib", "hyperdjango/*.pyd"]
+
+# ── Test configuration ───────────────────────────────────────────────────
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+pythonpath = ["."]
+asyncio_mode = "auto"
+filterwarnings = [
+    "ignore::pytest.PytestConfigWarning",
+]
+
+[tool.ruff]
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["F401", "SIM", "PTH", "I", "UP", "FURB", "PGH", "B006", "B039"]
+ignore = ["SIM102", "SIM110"]

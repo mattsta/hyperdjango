@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Saved — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Saved</h2>
+
+    <div class="tab-nav">
+        <a href="/saved" class="tab {% if not filter_type %}active{% endif %}">All</a>
+        <a href="/saved?type=posts" class="tab {% if filter_type == 'posts' %}active{% endif %}">Posts</a>
+        <a href="/saved?type=comments" class="tab {% if filter_type == 'comments' %}active{% endif %}">Comments</a>
+    </div>
+
+    {% if items %}
+    <ul class="profile-list">
+        {% for item in items %}
+        <li class="saved-item">
+            {% if item.type == 'post' %}
+                <a href="/post/{{ item.post_pid if item.post_pid else item.pid }}">{{ item.title if item.title else item.post_title }}</a>
+                <span class="meta">
+                    {{ item.score }} points
+                    {% if item.comment_count %}| {{ item.comment_count }} comments{% endif %}
+                    | saved {{ item.time_ago }}
+                </span>
+            {% else %}
+                <a href="/post/{{ item.post_pid }}#comment-{{ item.comment_id }}">{{ item.text }}</a>
+                <span class="meta">{{ item.score }} points | on "{{ item.post_title }}" | saved {{ item.time_ago }}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No saved items yet. Click "Save" on posts or comments to bookmark them.</p>
+    {% endif %}
+
+    {% if next_cursor %}
+    <div class="pagination">
+        <a href="/saved?{% if filter_type %}type={{ filter_type }}&{% endif %}cursor={{ next_cursor }}" class="page-link">More &rarr;</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

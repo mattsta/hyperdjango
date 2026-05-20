@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="post-detail">
+    <div class="post-header">
+        <div class="post-vote-large">
+            {% if user %}
+            <button class="vote-btn upvote {% if user_vote == 1 %}voted{% endif %}"
+                    hx-post="/vote"
+                    hx-vals='{"post_id": "{{ post.id }}", "direction": "up", "_csrf_token": "{{ csrf_token }}"}'
+                    hx-target="#score-post-{{ post.id }}"
+                    hx-swap="outerHTML"
+                    title="upvote">&#9650;</button>
+            <button class="vote-btn downvote {% if user_vote == -1 %}voted{% endif %}"
+                    hx-post="/vote"
+                    hx-vals='{"post_id": "{{ post.id }}", "direction": "down", "_csrf_token": "{{ csrf_token }}"}'
+                    hx-target="#score-post-{{ post.id }}"
+                    hx-swap="outerHTML"
+                    title="downvote">&#9660;</button>
+            {% endif %}
+        </div>
+        <div>
+            <h1 class="post-detail-title">
+                {% if post.url %}
+                    <a href="{{ post.url }}" rel="nofollow">{{ post.title }}</a>
+                    <span class="post-domain">({{ post.domain }})</span>
+                {% else %}
+                    {{ post.title }}
+                {% endif %}
+            </h1>
+            <div class="post-meta">
+                <span class="score" id="score-post-{{ post.id }}">{{ post.score }} point{{ 's' if post.score != 1 else '' }}</span>
+                by <a href="/user/{{ post.author }}">{{ post.author }}</a>
+                {% if post.forum %}
+                in <a href="/f/{{ post.forum.name }}/" class="forum-badge">f/{{ post.forum.name }}</a>
+                {% endif %}
+                <span class="post-time">{{ post.time_ago }}</span>
+                | {{ post.comment_count }} comment{{ 's' if post.comment_count != 1 else '' }}
+            </div>
+        </div>
+    </div>
+
+    {% if post.crosspost_source %}
+    {% include "_partials/crosspost_badge.html" %}
+    {% endif %}
+
+    {% if post.text %}
+    <div class="post-text">
+        {{ post.text }}
+    </div>
+    {% endif %}
+
+    {% if poll %}
+    {% include "_partials/poll_widget.html" %}
+    {% endif %}
+
+    {% if awards %}
+    {% include "_partials/awards_badge.html" %}
+    {% endif %}
+
+    <div class="post-actions">
+        {% if user %}
+        <a href="/post/{{ post.pid }}/crosspost" class="btn btn-sm btn-outline">Crosspost</a>
+        <a href="/post/{{ post.pid }}/award" class="btn btn-sm btn-outline">Give Award</a>
+        {% endif %}
+        {% if is_author and not poll %}
+        <a href="/post/{{ post.pid }}/poll/create" class="btn btn-sm btn-outline">Add Poll</a>
+        {% endif %}
+        {% if post.revision_count is defined and post.revision_count > 1 %}
+        <a href="/post/{{ post.pid }}/history" class="btn btn-sm btn-outline">Edit History ({{ post.revision_count }})</a>
+        {% endif %}
+        {% if is_mod and post.forum %}
+        <button hx-post="/f/{{ post.forum.name }}/pin/{{ post.pid }}"
+                hx-vals='{"_csrf_token": "{{ csrf_token }}"}'
+                hx-swap="none"
+                class="btn btn-sm btn-outline">
+            {% if post.is_pinned %}Unpin{% else %}Pin{% endif %}
+        </button>
+        {% endif %}
+    </div>
+
+    {% if related_posts %}
+    {% include "_partials/related_posts.html" %}
+    {% endif %}
+
+    <div class="comment-section">
+        {% if user %}
+        <form class="comment-form" method="post" action="/comment">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <textarea name="text" rows="6" placeholder="Add a comment..." required></textarea>
+            <button type="submit">Add Comment</button>
+        </form>
+        {% else %}
+        <p class="login-prompt"><a href="/login?next=/post/{{ post.pid }}">Log in</a> to comment.</p>
+        {% endif %}
+
+        <div class="comments" id="comments">
+            {% for comment in comments %}
+                {% include "_partials/comment.html" %}
+            {% endfor %}
+        </div>
+
+        {% if not comments %}
+        <p class="empty-state">No comments yet. Be the first!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

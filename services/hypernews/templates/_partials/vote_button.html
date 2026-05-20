@@ -1,0 +1,20 @@
+<div class="vote-controls">
+    {% if user %}
+    <button class="vote-btn upvote"
+            hx-post="/vote"
+            hx-vals='{"{{ target_type }}_id": "{{ target_id }}", "direction": "up", "_csrf_token": "{{ csrf_token }}"}'
+            hx-target="#score-{{ target_type }}-{{ target_id }}"
+            hx-swap="outerHTML"
+            title="upvote">&#9650;</button>
+    <span class="score" id="score-{{ target_type }}-{{ target_id }}">{{ score }} point{{ 's' if score != 1 else '' }}</span>
+    <button class="vote-btn downvote"
+            hx-post="/vote"
+            hx-vals='{"{{ target_type }}_id": "{{ target_id }}", "direction": "down", "_csrf_token": "{{ csrf_token }}"}'
+            hx-target="#score-{{ target_type }}-{{ target_id }}"
+            hx-swap="outerHTML"
+            title="downvote">&#9660;</button>
+    {% else %}
+    <a href="/login" class="vote-btn" title="login to vote">&#9650;</a>
+    <span class="score">{{ score }}</span>
+    {% endif %}
+</div>

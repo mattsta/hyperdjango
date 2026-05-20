@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<article style="margin-bottom: 2rem;">
+    <h1 style="font-size: 1.4rem; margin-bottom: 0.3rem;">{{ article.title }}</h1>
+    <div class="muted" style="margin-bottom: 1rem;">
+        <span class="tag tag-cat">{{ article.category }}</span>
+        {% if article.author %}<span style="margin-left: 0.5rem;">by {{ article.author }}</span>{% endif %}
+        {% if article.created_at %}<span style="margin-left: 0.5rem;">{{ article.created_at }}</span>{% endif %}
+    </div>
+    <div style="font-size: 0.95rem; line-height: 1.7; white-space: pre-wrap;">{{ article.body }}</div>
+</article>
+
+{% if similar %}
+<div style="border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
+    <h2 style="font-size: 1.1rem; margin-bottom: 0.75rem;">Similar Articles <span class="muted">({{ similar_ms }}ms via HNSW)</span></h2>
+    {% for s in similar %}
+    <a href="/article/{{ s.id }}" style="display: block; text-decoration: none; color: inherit;">
+    <div class="card" style="padding: 0.75rem 1rem;">
+        <span style="font-weight: 500;">{{ s.title }}</span>
+        <span class="tag tag-sim" style="margin-left: 0.5rem;">{{ s.similarity }}%</span>
+        <span class="tag tag-cat">{{ s.category }}</span>
+    </div>
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div style="margin-top: 1.5rem;">
+    <a href="/" class="btn btn-outline btn-sm">&larr; Back to search</a>
+</div>
+{% endblock %}

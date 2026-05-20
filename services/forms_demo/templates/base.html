@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Forms Demo{% endblock %} — HyperDjango</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        a { color: #3b82f6; }
+        nav { background: #1e293b; padding: 0.6rem 1rem; display: flex; gap: 1.5rem; align-items: center; }
+        nav a { color: #e2e8f0; text-decoration: none; font-size: 0.9rem; }
+        nav a:hover { color: white; }
+        .nav-brand { font-weight: 700; color: white !important; }
+        .container { max-width: 700px; margin: 0 auto; padding: 1.5rem 1rem; }
+        .btn { padding: 0.5rem 1rem; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+        .btn:hover { background: #2563eb; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.3rem; font-size: 0.9rem; }
+        input, textarea, select { padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; width: 100%; }
+        input:focus, textarea:focus, select:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+        .field-error { color: #dc2626; font-size: 0.8rem; display: block; margin-top: 0.2rem; }
+        .help-text { color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 0.2rem; }
+        .form-error { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; }
+        .success { background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; }
+        .card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+        .muted { color: #94a3b8; font-size: 0.85rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.5rem; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+        th { font-weight: 600; }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/" class="nav-brand">Forms Demo</a>
+    <a href="/contact">Contact</a>
+    <a href="/register">Register</a>
+    <a href="/tickets">Tickets</a>
+    <a href="/tickets/new">New Ticket</a>
+    <a href="/upload">Upload</a>
+</nav>
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

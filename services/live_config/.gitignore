@@ -1,0 +1,3 @@
+# Runtime state written by run_mesh.py (isolated demo databases' credentials:
+# each app's seeded tokens.json + namespace KEK files, plus server logs).
+.runtime/

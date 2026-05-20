@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Messages — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="messages-page">
+    <h2>Messages</h2>
+
+    {% if messages %}
+    <div class="message-list">
+        {% for msg in messages %}
+        <div class="message {% if not msg.is_read %}unread{% endif %}">
+            <div class="message-header">
+                <strong>{{ msg.subject }}</strong>
+                <span class="message-meta">from {{ msg.from_user }} | {{ msg.time_ago }}</span>
+            </div>
+            <div class="message-body">{{ msg.body }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">No messages.</p>
+    {% endif %}
+
+    {% if is_staff %}
+    <div class="send-message-section">
+        <h3>Send Admin Message</h3>
+        <form method="post" action="/messages/send" class="message-form">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+            <div class="form-group">
+                <label for="to_username">To (username)</label>
+                <input type="text" id="to_username" name="to_username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" maxlength="200" required>
+            </div>
+
+            <div class="form-group">
+                <label for="body">Message</label>
+                <textarea id="body" name="body" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

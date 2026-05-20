@@ -1,0 +1,26 @@
+{# Included in post_detail.html when post has a poll #}
+<div class="poll-widget" id="poll-{{ poll.id }}">
+    <h3>📊 {{ poll.question }}</h3>
+    <div class="poll-options">
+        {% for option in poll.options %}
+        <div class="poll-option">
+            <div class="poll-option-bar" style="width: {{ option.percent }}%"></div>
+            <div class="poll-option-content">
+                {% if user and not poll.user_voted %}
+                <button hx-post="/poll/{{ poll.id }}/vote"
+                        hx-vals='{"option_id": "{{ option.id }}", "_csrf_token": "{{ csrf_token }}"}'
+                        hx-target="#poll-{{ poll.id }}"
+                        hx-swap="outerHTML"
+                        class="poll-vote-btn">
+                    {{ option.text }}
+                </button>
+                {% else %}
+                <span class="poll-option-text">{{ option.text }}</span>
+                {% endif %}
+                <span class="poll-option-count">{{ option.vote_count }} votes ({{ option.percent }}%)</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <p class="poll-meta">{{ poll.total_votes }} total votes · {{ poll.poll_type }}</p>
+</div>

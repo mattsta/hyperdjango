@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Submit to f/{{ forum.name }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Submit to <a href="/f/{{ forum.name }}/">f/{{ forum.name }}</a></h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" action="/f/{{ forum.name }}/submit" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" value="{{ title if title else '' }}"
+                   maxlength="300" required placeholder="Post title">
+        </div>
+
+        <div class="form-group">
+            <label for="url">URL <span class="optional">(optional)</span></label>
+            <input type="url" id="url" name="url" value="{{ url if url else '' }}"
+                   placeholder="https://example.com">
+        </div>
+
+        <div class="form-group">
+            <label for="text">Text <span class="optional">(optional, for self-posts)</span></label>
+            <textarea id="text" name="text" rows="6" placeholder="Leave blank for link posts, or write text for Ask/Show posts">{{ text if text else '' }}</textarea>
+        </div>
+
+        <p class="form-hint">
+            Posting to <strong>f/{{ forum.name }}</strong> ({{ forum.title }}).
+            Prefix title with "Ask {{ site.name }}:" for questions or "Show {{ site.name }}:" for show-and-tell.
+        </p>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

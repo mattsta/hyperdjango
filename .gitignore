@@ -1,0 +1,77 @@
+*.so
+*.dylib
+moar*
+**/.zig-cache
+**/.venv
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+*.log
+zig/logs
+.hypothesis
+logs
+docs/internal/
+site/
+benchmarks/websocket/out/
+
+# Environment / secrets — NEVER commit (public repo)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials.json
+
+# `hyper service run` per-service state: generated signing secrets live in
+# services/<name>/.env.local (already covered by .env.* above) and minted demo
+# tokens / KEK files live in services/<name>/.runtime/.
+services/*/.runtime/
+
+# we _DO_ save the version here since we are ABI specific
+!.python-version
+
+# Runtime artifacts
+*.pid
+
+# Runtime test scratch — tests that need on-disk fixtures create them
+# under .test_scratch/<name>/ and use try/finally cleanup. This entry is
+# defense-in-depth for failed-cleanup scenarios.
+.test_scratch/
+
+# Internal-only docs (audits, plans, AI agent context)
+CLAUDE.md
+GUARD_REQUEST_LIFECYCLE.md
+*_AUDIT*.md
+*_PLAN.md
+
+# Debug / investigation / one-shot scratch scripts
+scripts/audit_*.py
+scripts/trace_*.py
+scripts/*_trace.py
+scripts/*_debug.py
+scripts/test_template_super.py
+scripts/test_template_extends_only.py
+scripts/test_cycle_raw.py
+scripts/test_db_query_direct.py
+scripts/test_db_smoke_session_reset.py
+scripts/test_thread_conn.py
+scripts/test_column_cache_stale.py
+benchmarks/http/out/
+benchmarks/out/
+
+# Internal scratch — never ship in the public repo
+scratchpad/
+
+# macOS Finder cruft
+.DS_Store
+
+# Repo-local toolchains (auto-downloaded by scripts/dev_bootstrap.sh; also the
+# hand-extracted layout hyper-build discovers)
+.toolchain/
+zig-*/
+zig-*.tar.xz

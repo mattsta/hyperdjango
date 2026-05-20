@@ -1,0 +1,76 @@
+{
+  "id": "20260724T034537949_cc864a6",
+  "ts": "2026-07-24T03:45:37",
+  "sha": "cc864a6",
+  "branch": "main",
+  "subject": "Release hyperdjango",
+  "host": "backtest",
+  "cores": 256,
+  "label": "",
+  "sweeps": {
+    "workers": {
+      "meta": {
+        "frameworks": [
+          "hyperdjango-threaded",
+          "hyperdjango-reactor"
+        ],
+        "payloads": [
+          [
+            "plaintext",
+            0
+          ],
+          [
+            "64B",
+            64
+          ],
+          [
+            "256B",
+            256
+          ],
+          [
+            "1KiB",
+            1024
+          ],
+          [
+            "4KiB",
+            4096
+          ],
+          [
+            "16KiB",
+            16384
+          ],
+          [
+            "64KiB",
+            65536
+          ],
+          [
+            "256KiB",
+            262144
+          ]
+        ],
+        "worker_counts": [
+          8,
+          16,
+          32,
+          64,
+          96,
+          128,
+          160,
+          200,
+          256
+        ],
+        "sweep_concurrency": 512,
+        "cores": 256,
+        "duration_s": 10.0,
+        "warmup_s": 2.0,
+        "client": "wrk",
+        "configs": {
+          "hyperdjango-threaded": "native Zig HTTP core \u00b7 W-thread worker pool, thread-per-connection",
+          "hyperdjango-reactor": "native Zig HTTP core \u00b7 kqueue/epoll reactor multiplexing + W-thread pool"
+        },
+        "interpreter": "CPython 3.14.6 free-threaded, no GIL"
+      },
+      "results": []
+    }
+  }
+}

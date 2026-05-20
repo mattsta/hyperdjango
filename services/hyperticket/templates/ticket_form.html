@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}New Ticket — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px">
+    <h2>Create Ticket</h2>
+    {% if errors %}
+    <div class="errors"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>
+    {% endif %}
+    <form method="post" action="/tickets/new">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required maxlength="300">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" maxlength="10000"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="ticket_type_id">Type</label>
+            <select id="ticket_type_id" name="ticket_type_id" required>
+                {% for t in types %}<option value="{{ t.id }}">{{ t.label }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="priority_id">Priority</label>
+            <select id="priority_id" name="priority_id" required>
+                {% for p in priorities %}<option value="{{ p.id }}" {% if p.is_default %}selected{% endif %}>{{ p.label }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="customer_id">Customer</label>
+            <select id="customer_id" name="customer_id" required>
+                {% for c in customers %}<option value="{{ c.id }}">{{ c.display_name }} ({{ c.email }})</option>{% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="team_id">Team (optional)</label>
+            <select id="team_id" name="team_id">
+                <option value="0">— None —</option>
+                {% for t in teams %}<option value="{{ t.id }}">{{ t.name }}</option>{% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Ticket</button>
+    </form>
+</div>
+{% endblock %}

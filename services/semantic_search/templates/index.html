@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-bottom: 1.5rem;">
+    <h1 style="font-size: 1.4rem; margin-bottom: 0.3rem;">
+        {% if query %}Search: "{{ query }}"{% else %}Semantic Search{% endif %}
+    </h1>
+    <p class="muted">Find articles by meaning, not just keywords</p>
+</div>
+
+<form action="/search" method="get" style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+    <input type="text" name="q" placeholder="Search articles..." value="{{ query }}" autofocus style="flex: 1; min-width: 200px;">
+    <select name="category" style="width: auto; min-width: 120px;">
+        <option value="">All categories</option>
+        {% for cat in categories %}
+        <option value="{{ cat }}" {% if cat == category %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn">Search</button>
+</form>
+
+{% if results %}
+<div class="muted" style="margin-bottom: 0.75rem;">
+    {{ total }} results in <strong>{{ timing_ms }}ms</strong> — searching {{ total_articles }} articles via HNSW cosine index
+</div>
+{% for r in results %}
+<a href="/article/{{ r.id }}" style="display: block; text-decoration: none; color: inherit;">
+<div class="card">
+    <div style="font-weight: 600; font-size: 1.05rem;">{{ r.title }}</div>
+    <div style="margin-top: 0.2rem;">
+        <span class="tag tag-sim">{{ r.similarity }}% match</span>
+        <span class="tag tag-cat">{{ r.category }}</span>
+        {% if r.created_at %}<span class="muted" style="margin-left: 0.5rem;">{{ r.created_at }}</span>{% endif %}
+    </div>
+    <div style="color: #475569; font-size: 0.9rem; margin-top: 0.5rem;">{{ r.body }}</div>
+</div>
+</a>
+{% endfor %}
+
+{% elif query %}
+<div style="text-align: center; color: #94a3b8; padding: 3rem 0;">No results for "{{ query }}"</div>
+
+{% else %}
+{% if recent %}
+<h2 style="font-size: 1.1rem; margin-bottom: 0.75rem;">Recent Articles</h2>
+{% for r in recent %}
+<a href="/article/{{ r.id }}" style="display: block; text-decoration: none; color: inherit;">
+<div class="card">
+    <div style="font-weight: 600;">{{ r.title }}</div>
+    <div style="margin-top: 0.2rem;">
+        <span class="tag tag-cat">{{ r.category }}</span>
+        {% if r.created_at %}<span class="muted" style="margin-left: 0.5rem;">{{ r.created_at }}</span>{% endif %}
+    </div>
+    <div style="color: #475569; font-size: 0.9rem; margin-top: 0.4rem;">{{ r.body | truncate(200) }}</div>
+</div>
+</a>
+{% endfor %}
+{% else %}
+<div style="text-align: center; color: #94a3b8; padding: 3rem 0;">
+    Try searching for "machine learning", "database optimization", or "web security"
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

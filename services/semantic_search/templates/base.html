@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Semantic Search{% endblock %} — HyperDjango</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        a { color: #3b82f6; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        nav { background: #1e293b; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 1.5rem; }
+        nav a { color: #e2e8f0; font-size: 0.9rem; }
+        nav a:hover { color: white; text-decoration: none; }
+        .nav-brand { font-weight: 700; color: white !important; font-size: 1rem; }
+        .nav-right { margin-left: auto; display: flex; gap: 1rem; align-items: center; }
+        .nav-user { color: #94a3b8; font-size: 0.85rem; }
+        .container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
+        .btn {
+            display: inline-block; padding: 0.5rem 1rem; background: #3b82f6; color: white;
+            border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer; transition: background 0.2s;
+        }
+        .btn:hover { background: #2563eb; text-decoration: none; color: white; }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8rem; }
+        .btn-outline { background: transparent; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f1f5f9; color: #1e293b; }
+        input[type="text"], input[type="password"], textarea, select {
+            padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;
+            font-size: 0.95rem; outline: none; transition: border-color 0.2s; width: 100%;
+        }
+        input:focus, textarea:focus, select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+        .card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; margin-bottom: 0.75rem; }
+        .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .tag {
+            display: inline-block; padding: 0.1rem 0.5rem; border-radius: 4px;
+            font-size: 0.75rem; font-weight: 600;
+        }
+        .tag-sim { background: #dbeafe; color: #1d4ed8; }
+        .tag-cat { background: #f1f5f9; color: #475569; margin-left: 0.4rem; }
+        .muted { color: #94a3b8; font-size: 0.85rem; }
+        .error { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.3rem; font-size: 0.9rem; }
+        footer { text-align: center; padding: 2rem 1rem; color: #94a3b8; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/" class="nav-brand">Semantic Search</a>
+    <a href="/">Search</a>
+    {% if user %}
+    <a href="/submit">Submit Article</a>
+    {% endif %}
+    <div class="nav-right">
+        {% if user %}
+        <span class="nav-user">{{ user.username }}</span>
+        <a href="/logout">Logout</a>
+        {% else %}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        {% endif %}
+    </div>
+</nav>
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+<footer>
+    Powered by HyperDjango + pgvector — HNSW cosine index, OpenAI-compatible embeddings
+</footer>
+</body>
+</html>

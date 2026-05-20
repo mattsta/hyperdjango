@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Agents — {{ site.name }}{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <h2>Agents</h2>
+    <a href="/agents/new" class="btn btn-primary">Add Agent</a>
+</div>
+<div class="card">
+    <table>
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Active</th></tr></thead>
+        <tbody>
+            {% for agent in agents %}
+            <tr>
+                <td>{{ agent.display_name }}</td>
+                <td>{{ agent.email }}</td>
+                <td><span class="badge btn-secondary">{{ agent.role.value }}</span></td>
+                <td>{% if agent_active[agent.id] %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,222 @@
+name: Deep validation
+
+# Heavyweight, per-platform memory/race checkers that need their own external
+# toolchain — deliberately SEPARATE from ci.yml and never blocking a PR. Run
+# on demand only (workflow_dispatch — manually triggered); promote a lane into
+# ci.yml's always-on ladder only once it has proven green here.
+#
+# Each lane uses the best checker its OS supports, against the SAME stress
+# subset the ci.yml `test-sanitized` rung runs under the portable Zig
+# DebugAllocator:
+#   - Linux   → Valgrind memcheck (works on the stock interpreter; catches
+#               double-free / invalid-free / heap-buffer-overflow on the
+#               c_allocator sites the DebugAllocator does not route).
+#   - macOS   → Guard Malloc (libgmalloc — the macOS equivalent).
+# A real ThreadSanitizer lane needs a purpose-built --with-thread-sanitizer
+# CPython; it is added separately once that interpreter build is wired.
+#
+# NOTE: these lanes are authored but have NOT been executed by their author
+# (no Linux/Valgrind host was available locally) — expect to iterate on
+# suppressions / flags on the first few runs before flipping any of them into
+# the blocking ladder.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deep-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Linux: Valgrind memcheck. Valgrind serializes threads, so it will not
+  # necessarily OPEN a multicore race — but it deterministically traps a
+  # double-free / invalid-free / OOB the moment one occurs, which is the class
+  # behind the pinned-slot double-release. Runs the instrumentable targets
+  # DIRECTLY (one process that loads the .so), not through the hyper-test
+  # runner (whose subprocesses valgrind would not follow without --trace-
+  # children, which explodes runtime).
+  valgrind-linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      # Route Python allocations through malloc so valgrind sees them instead
+      # of pymalloc's arena bookkeeping (which otherwise buries real errors).
+      PYTHONMALLOC: malloc
+    steps:
+      - uses: actions/checkout@v6
+      - name: Toolchain — ReleaseSafe
+        uses: ./.github/actions/setup-toolchain
+        with:
+          build-mode: safe
+      - name: PostgreSQL 18 + pgvector
+        uses: ./.github/actions/setup-postgres
+      - name: Ensure required PostgreSQL extensions
+        run: |
+          DATABASE_URL=postgres://postgres@localhost:5432/template1 \
+            uv run hyper db extensions ensure
+          DATABASE_URL=postgres://postgres@localhost:5432/hyperdjango_test \
+            uv run hyper db extensions ensure
+      - name: Install Valgrind
+        run: sudo apt-get update -qq && sudo apt-get install -y valgrind
+      - name: Concurrency stress under Valgrind memcheck
+        run: |
+          set -x
+          PY=$(uv run python -c "import sys; print(sys.executable)")
+          # Suppress CPython's own known-benign reachable-block noise; fail the
+          # job only on genuine memory ERRORS (invalid free/read/write).
+          SUPP=""
+          [ -f Misc/valgrind-python.supp ] && SUPP="--suppressions=Misc/valgrind-python.supp"
+          uv run valgrind \
+            --error-exitcode=1 \
+            --leak-check=no \
+            --errors-for-leak-kinds=none \
+            $SUPP \
+            "$PY" -m pytest tests/test_standalone/test_native_concurrency_stress.py \
+              -p no:django --override-ini="DJANGO_SETTINGS_MODULE=" -q
+
+  # Linux: REAL ThreadSanitizer. TSan cannot run against the stock free-threaded
+  # interpreter (it SIGSEGVs — the interpreter isn't instrumented), so this lane
+  # BUILDS the infrastructure once and caches it forever: a CPython 3.14t
+  # configured --with-thread-sanitizer --disable-gil. The extension is then
+  # compiled with -Dsanitize-thread (build_hyperdjango.py --sanitize-thread),
+  # and the concurrency subset runs under it — the only setup that produces real
+  # data-race reports (would have named the pinned-slot race directly).
+  #
+  # SCAFFOLD — authored, NOT yet run by its author. Expect to iterate on the
+  # CPython configure flags, TSAN_OPTIONS suppressions (CPython has known benign
+  # races), and timeouts before this is trustworthy. The reusable half (the
+  # -Dsanitize-thread build wiring in build.zig/py.zig) is already validated to
+  # not affect production; only this CPython-build lane needs proving out.
+  tsan-linux:
+    runs-on: ubuntu-latest
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PYVER: "3.14.0" # pin the CPython tag built with TSan; bump deliberately
+      TSAN_OPTIONS: "halt_on_error=1 second_deadlock_stack=1"
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Zig
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIG_VERSION=0.16.0
+          curl -fsSL "https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz" -o /tmp/zig.tar.xz
+          echo "70e49664a74374b48b51e6f3fdfbf437f6395d42509050588bd49abe52ba3d00  /tmp/zig.tar.xz" | sha256sum -c -
+          mkdir -p "$HOME/.zig" && tar -xJf /tmp/zig.tar.xz -C "$HOME/.zig" --strip-components=1
+          echo "$HOME/.zig" >> "$GITHUB_PATH"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+
+      # The instrumented interpreter is expensive to build (~10-20 min) and
+      # never changes for a given tag+flags — cache it so it is built once and
+      # reused across every subsequent run.
+      - name: Cache TSan CPython
+        id: tsan-py
+        uses: actions/cache@v4
+        with:
+          path: ~/tsan-python
+          key: tsan-cpython-${{ env.PYVER }}-v1
+
+      - name: Build --with-thread-sanitizer CPython
+        if: steps.tsan-py.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y build-essential libssl-dev zlib1g-dev libffi-dev clang
+          curl -fsSL "https://www.python.org/ftp/python/${PYVER}/Python-${PYVER}.tgz" -o /tmp/py.tgz
+          mkdir -p /tmp/pysrc && tar -xzf /tmp/py.tgz -C /tmp/pysrc --strip-components=1
+          cd /tmp/pysrc
+          CC=clang CXX=clang++ ./configure \
+            --prefix="$HOME/tsan-python" \
+            --disable-gil \
+            --with-thread-sanitizer \
+            --enable-shared
+          make -j"$(nproc)"
+          make install
+
+      - name: Point PATH at the TSan interpreter
+        shell: bash
+        run: |
+          echo "$HOME/tsan-python/bin" >> "$GITHUB_PATH"
+          echo "LD_LIBRARY_PATH=$HOME/tsan-python/lib" >> "$GITHUB_ENV"
+
+      - name: Install project deps into the TSan interpreter
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYBIN="$HOME/tsan-python/bin/python3.14t"
+          "$PYBIN" -m venv "$HOME/tsan-venv"
+          # Install from pyproject; the native ext is built separately below.
+          "$HOME/tsan-venv/bin/pip" install --upgrade pip
+          "$HOME/tsan-venv/bin/pip" install -e . || "$HOME/tsan-venv/bin/pip" install .
+
+      - name: PostgreSQL 18 + pgvector
+        uses: ./.github/actions/setup-postgres
+
+      - name: Ensure required PostgreSQL extensions
+        run: |
+          DATABASE_URL=postgres://postgres@localhost:5432/template1 \
+            "$HOME/tsan-venv/bin/hyper" db extensions ensure
+          DATABASE_URL=postgres://postgres@localhost:5432/hyperdjango_test \
+            "$HOME/tsan-venv/bin/hyper" db extensions ensure
+
+      - name: Build the extension with ThreadSanitizer
+        shell: bash
+        run: |
+          "$HOME/tsan-venv/bin/python" zig/build_hyperdjango.py --install --safe --sanitize-thread
+
+      - name: Concurrency stress under ThreadSanitizer
+        shell: bash
+        run: |
+          "$HOME/tsan-venv/bin/python" -m pytest \
+            tests/test_standalone/test_native_concurrency_stress.py \
+            -p no:django --override-ini="DJANGO_SETTINGS_MODULE=" -q
+
+  # macOS: Guard Malloc (libgmalloc) puts every allocation on its own page with
+  # an unmapped guard page, so a double-free / use-after-free / OOB faults
+  # immediately. Injected via DYLD_INSERT_LIBRARIES; the venv python is invoked
+  # DIRECTLY because `uv run` (and SIP) strip DYLD_* across re-exec.
+  guard-malloc-macos:
+    runs-on: macos-latest
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+    steps:
+      - uses: actions/checkout@v6
+      - name: Toolchain — ReleaseSafe
+        uses: ./.github/actions/setup-toolchain
+        with:
+          build-mode: safe
+      - name: PostgreSQL 18 + pgvector
+        uses: ./.github/actions/setup-postgres
+      - name: Ensure required PostgreSQL extensions
+        run: |
+          DATABASE_URL=postgres://postgres@localhost:5432/template1 \
+            uv run hyper db extensions ensure
+          DATABASE_URL=postgres://postgres@localhost:5432/hyperdjango_test \
+            uv run hyper db extensions ensure
+      - name: Concurrency stress under Guard Malloc
+        run: |
+          set -x
+          PY=$(uv run python -c "import sys; print(sys.executable)")
+          MallocScribble=1 \
+          DYLD_INSERT_LIBRARIES=/usr/lib/libgmalloc.dylib \
+            "$PY" -m pytest tests/test_standalone/test_native_concurrency_stress.py \
+              -p no:django --override-ini="DJANGO_SETTINGS_MODULE=" -q

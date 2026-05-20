@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Inbox — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="page-header">
+        <h2>Inbox</h2>
+        <form method="post" action="/inbox/read" class="inline-form">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <button type="submit" class="btn btn-sm">Mark all read</button>
+        </form>
+    </div>
+
+    {% if notifications %}
+    <ul class="notification-list">
+        {% for notif in notifications %}
+        <li class="notification-item {% if not notif.is_read %}unread{% endif %}">
+            <div class="notification-content">
+                {% if notif.actor %}
+                <strong>{{ notif.actor }}</strong>
+                {% endif %}
+                <span class="notification-message">{{ notif.message }}</span>
+                {% if notif.post_pid %}
+                <a href="/post/{{ notif.post_pid }}{% if notif.comment_id %}#comment-{{ notif.comment_id }}{% endif %}" class="notification-link">View</a>
+                {% endif %}
+            </div>
+            <div class="notification-meta">
+                <span class="notification-type">{{ notif.type }}</span>
+                <span class="notification-time">{{ notif.time_ago }}</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No notifications yet.</p>
+    {% endif %}
+
+    {% if next_cursor %}
+    <div class="pagination">
+        <a href="/inbox?cursor={{ next_cursor }}" class="page-link">More &rarr;</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

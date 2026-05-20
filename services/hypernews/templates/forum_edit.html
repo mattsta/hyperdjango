@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Edit f/{{ forum.name }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Edit <a href="/f/{{ forum.name }}/">f/{{ forum.name }}</a></h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" action="/f/{{ forum.name }}/edit" class="submit-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="title">Display Title</label>
+            <input type="text" id="title" name="title" value="{{ forum.title }}"
+                   maxlength="100" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4">{{ forum.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="rules">Rules</label>
+            <textarea id="rules" name="rules" rows="4">{{ forum.rules }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="is_public" {% if forum.is_public %}checked{% endif %}>
+                Public (visible to everyone — unchecked means private, members-only)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="is_archived" {% if forum.is_archived %}checked{% endif %}>
+                Archived (read-only — no new posts, no new comments)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="is_locked" {% if forum.is_locked %}checked{% endif %}>
+                Locked (no new posts, existing content still visible)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="is_hidden" {% if forum.is_hidden %}checked{% endif %}>
+                Hidden (invisible in directory, only accessible via direct URL)
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="/f/{{ forum.name }}/about" class="btn btn-sm btn-outline">Cancel</a>
+    </form>
+</div>
+{% endblock %}

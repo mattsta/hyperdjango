@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Drafts — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>My Drafts</h2>
+
+    {% if drafts %}
+    <ul class="profile-list">
+        {% for draft in drafts %}
+        <li class="saved-item">
+            <a href="/post/{{ draft.pid }}">{{ draft.title }}</a>
+            {% if draft.text %}
+            <p class="draft-preview">{{ draft.text }}</p>
+            {% endif %}
+            <span class="meta">saved {{ draft.time_ago }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty-state">No drafts. Save a draft when submitting a post.</p>
+    {% endif %}
+</div>
+{% endblock %}

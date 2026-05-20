@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Account Settings — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h2>Account Settings</h2>
+
+    {% if error %}
+    <div class="error-box">
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+
+    {% if success %}
+    <div class="success-box">
+        <p>{{ success }}</p>
+    </div>
+    {% endif %}
+
+    <form method="post" action="/account" class="account-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <fieldset>
+            <legend>Profile</legend>
+            <div class="form-group">
+                <label for="display_name">Display Name</label>
+                <input type="text" id="display_name" name="display_name"
+                       value="{{ account.display_name }}" maxlength="60">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"
+                       value="{{ account.email }}">
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" rows="4">{{ account.bio }}</textarea>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Change Password</legend>
+            <div class="form-group">
+                <label for="current_password">Current Password</label>
+                <input type="password" id="current_password" name="current_password">
+            </div>
+
+            <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input type="password" id="new_password" name="new_password" minlength="8">
+                <span class="form-hint">At least 8 characters. Leave blank to keep current password.</span>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

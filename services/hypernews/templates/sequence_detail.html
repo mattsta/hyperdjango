@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ sequence.title }} — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="post-detail">
+    <div class="post-header">
+        <div>
+            <h1 class="post-detail-title">{{ sequence.title }}</h1>
+            <div class="post-meta">
+                by <a href="/user/{{ sequence.author_name }}">{{ sequence.author_name }}</a>
+            </div>
+        </div>
+    </div>
+
+    {% if sequence.description %}
+    <div class="post-text">
+        {{ sequence.description }}
+    </div>
+    {% endif %}
+
+    <div class="comment-section">
+        <h3>Posts in this sequence</h3>
+
+        {% if entries %}
+        <ol class="sequence-entries">
+            {% for entry in entries %}
+            <li class="post-item">
+                <div class="post-content">
+                    <div class="post-title-line">
+                        <span class="sequence-position">{{ entry.position }}.</span>
+                        <a href="/post/{{ entry.post_pid }}" class="post-title">{{ entry.post_title }}</a>
+                    </div>
+                    <div class="post-meta">
+                        <span class="score">{{ entry.post_score }} point{{ 's' if entry.post_score != 1 else '' }}</span>
+                        {% if is_author %}
+                        <span class="sep">&middot;</span>
+                        <button class="btn btn-sm btn-outline"
+                                hx-delete="/sequences/{{ sequence.id }}/entries/{{ entry.post_pid }}"
+                                hx-vals='{"_csrf_token": "{{ csrf_token }}"}'
+                                hx-target="closest .post-item"
+                                hx-swap="outerHTML"
+                                hx-confirm="Remove this post from the sequence?">Remove</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p class="empty-state">No posts in this sequence yet.</p>
+        {% endif %}
+
+        {% if is_author %}
+        <h3>Add a post</h3>
+        <form method="post" action="/sequences/{{ sequence.id }}/entries" class="inline-form">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <div class="form-group">
+                <label for="post_pid">Post PID</label>
+                <input type="text" id="post_pid" name="post_pid" required placeholder="e.g. abc123">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Add Post</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

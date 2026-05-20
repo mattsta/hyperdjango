@@ -1,0 +1,292 @@
+/* =========================================================
+   HyperDjango docs theme — custom layer on top of Material.
+   ========================================================= */
+
+:root {
+  --hd-orange: #f15a29;
+  --hd-orange-bright: #ff7a3d;
+  --hd-zig: #f7a41d;
+  --hd-django: #0c4b33;
+  --hd-ink: #0e1116;
+  --hd-paper: #fafafa;
+  --hd-border: rgba(127, 127, 127, 0.18);
+
+  --md-primary-fg-color: var(--hd-orange);
+  --md-primary-fg-color--light: var(--hd-orange-bright);
+  --md-primary-fg-color--dark: #c8421b;
+  --md-accent-fg-color: var(--hd-orange-bright);
+}
+
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: var(--hd-paper);
+  --md-default-fg-color: var(--hd-ink);
+  --md-typeset-a-color: var(--hd-orange);
+  --md-code-bg-color: #1e2229;
+  --md-code-fg-color: #e6e8eb;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #0e1116;
+  --md-default-bg-color--light: #14181f;
+  --md-default-fg-color: #e6e8eb;
+  --md-typeset-a-color: var(--hd-orange-bright);
+  --md-code-bg-color: #0b0e13;
+  --md-code-fg-color: #d8dce3;
+}
+
+/* Slim announce strip at the top */
+.hd-announce {
+  font-size: 0.72rem;
+  text-align: center;
+  padding: 0.4rem 1rem;
+  background: linear-gradient(90deg, var(--hd-orange) 0%, var(--hd-zig) 100%);
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+.hd-announce a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.hd-announce a:hover {
+  color: #0e1116;
+}
+
+/* Header tweaks */
+.md-header {
+  box-shadow: 0 1px 0 var(--hd-border);
+}
+
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Tab strip */
+.md-tabs {
+  background: transparent;
+  color: inherit;
+  border-bottom: 1px solid var(--hd-border);
+}
+
+[data-md-color-scheme="slate"] .md-tabs {
+  background: #14181f;
+}
+
+.md-tabs__link {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  opacity: 1;
+  color: var(--hd-orange-bright);
+}
+
+/* Body typography */
+.md-typeset {
+  font-feature-settings: "ss01", "cv02", "cv11";
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.md-typeset h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--md-default-fg-color);
+  border-bottom: 1px solid var(--hd-border);
+  padding-bottom: 0.45rem;
+}
+
+.md-typeset h2 {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin-top: 2.4em;
+  border-bottom: 1px solid var(--hd-border);
+  padding-bottom: 0.3rem;
+}
+
+.md-typeset h3,
+.md-typeset h4 {
+  font-weight: 600;
+}
+
+/* Code blocks */
+.md-typeset code,
+.md-typeset pre > code {
+  font-feature-settings: "calt", "ss01", "ss02";
+  font-size: 0.74rem;
+}
+
+.md-typeset pre > code {
+  line-height: 1.55;
+}
+
+.md-typeset .highlight {
+  border-radius: 6px;
+  border: 1px solid var(--hd-border);
+}
+
+.md-typeset .highlight pre {
+  border-radius: 6px;
+}
+
+/* Inline code */
+.md-typeset :not(pre) > code {
+  background: rgba(241, 90, 41, 0.08);
+  color: var(--hd-orange);
+  border: 1px solid rgba(241, 90, 41, 0.18);
+  padding: 0.05em 0.35em;
+  border-radius: 3px;
+}
+
+[data-md-color-scheme="slate"] .md-typeset :not(pre) > code {
+  background: rgba(255, 122, 61, 0.10);
+  color: var(--hd-orange-bright);
+  border-color: rgba(255, 122, 61, 0.20);
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--hd-border);
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 0.74rem;
+}
+
+.md-typeset table:not([class]) th {
+  background: rgba(241, 90, 41, 0.06);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: rgba(255, 122, 61, 0.08);
+}
+
+/* Admonitions */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 6px;
+  border-width: 1px;
+  font-size: 0.74rem;
+  box-shadow: none;
+}
+
+/* Navigation: sections styling */
+.md-nav__title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.66rem;
+  opacity: 0.75;
+}
+
+.md-nav__link {
+  font-size: 0.74rem;
+}
+
+.md-nav__link--active {
+  color: var(--hd-orange) !important;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .md-nav__link--active {
+  color: var(--hd-orange-bright) !important;
+}
+
+/* Footer.
+   IMPORTANT: keep the footer fully opaque. Material's sticky sidebars share
+   the page scroll context, so a transparent footer lets sidebar content
+   bleed through when the reader scrolls to the bottom of a long page. */
+.md-footer {
+  position: relative;
+  z-index: 3;
+  color: inherit;
+  border-top: 1px solid var(--hd-border);
+  background: var(--md-default-bg-color);
+}
+
+.md-footer-meta {
+  color: inherit;
+  background: var(--md-default-bg-color);
+  border-top: 1px solid var(--hd-border);
+}
+
+.md-footer-meta .md-footer-meta__inner {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.md-footer__inner {
+  background: var(--md-default-bg-color);
+  border-bottom: 1px solid var(--hd-border);
+}
+
+[data-md-color-scheme="default"] .md-footer,
+[data-md-color-scheme="default"] .md-footer-meta,
+[data-md-color-scheme="default"] .md-footer__inner {
+  background: #f3f3f3;
+}
+
+[data-md-color-scheme="slate"] .md-footer,
+[data-md-color-scheme="slate"] .md-footer-meta,
+[data-md-color-scheme="slate"] .md-footer__inner {
+  background: #0a0d12;
+}
+
+.md-copyright {
+  color: inherit;
+  opacity: 0.85;
+}
+
+.md-copyright__highlight {
+  color: inherit;
+  font-weight: 500;
+}
+
+.hd-footer__build {
+  font-size: 0.66rem;
+  opacity: 0.7;
+  margin-top: 0.25rem;
+}
+
+.hd-footer__build a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Search */
+.md-search__form {
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+[data-md-color-scheme="default"] .md-search__form {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Compact spacing for dense reference pages */
+.md-typeset ul li,
+.md-typeset ol li {
+  margin-bottom: 0.15em;
+}
+
+.md-typeset li > p {
+  margin: 0.25em 0;
+}
+
+/* Print: drop announce + dark code on white */
+@media print {
+  .hd-announce,
+  .md-header,
+  .md-tabs,
+  .md-sidebar,
+  .md-footer {
+    display: none !important;
+  }
+}

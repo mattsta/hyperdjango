@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Register — {{ site.name }}{% endblock %}
+
+{% block content %}
+<div class="form-page form-narrow">
+    <h2>Create Account</h2>
+
+    {% if errors %}
+    <div class="error-box">
+        {% for error in errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" action="/register" class="auth-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username"
+                   value="{{ username if username else '' }}"
+                   maxlength="30" required autofocus
+                   pattern="[a-zA-Z0-9_-]+"
+                   title="Letters, numbers, hyphens, and underscores only">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email <span class="optional">(optional)</span></label>
+            <input type="email" id="email" name="email"
+                   value="{{ email if email else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required
+                   minlength="8">
+            <span class="form-hint">At least 8 characters</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Account</button>
+    </form>
+
+    <p class="form-footer">
+        Already have an account? <a href="/login">Login</a>
+    </p>
+</div>
+{% endblock %}

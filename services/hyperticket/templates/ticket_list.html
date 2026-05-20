@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Tickets — {{ site.name }}{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <h2>Tickets</h2>
+    <a href="/tickets/new" class="btn btn-primary">New Ticket</a>
+</div>
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Assignee</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody id="ticket-rows">
+            {% for ticket in tickets %}
+            <tr>
+                <td><a href="/tickets/{{ ticket.id }}">{{ ticket.ticket_number }}</a></td>
+                <td><a href="/tickets/{{ ticket.id }}">{{ ticket.title }}</a></td>
+                <td>
+                    {% if status_map[ticket.status_id] %}
+                    <span class="badge" style="background:{{ status_map[ticket.status_id].color }};color:#fff">
+                        {{ status_map[ticket.status_id].label }}
+                    </span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if priority_map[ticket.priority_id] %}
+                    <span class="badge" style="background:{{ priority_map[ticket.priority_id].color }};color:#fff">
+                        {{ priority_map[ticket.priority_id].label }}
+                    </span>
+                    {% endif %}
+                </td>
+                <td>{{ ticket.assignee_id or "Unassigned" }}</td>
+                <td>{{ time_ago(ticket.created_at) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if prev_cursor or next_cursor %}
+    <div style="display:flex;justify-content:space-between;padding:1rem 0">
+        {% if prev_cursor %}
+        <a href="/tickets/?cursor={{ prev_cursor }}" class="btn btn-secondary">Previous</a>
+        {% else %}
+        <span></span>
+        {% endif %}
+        {% if next_cursor %}
+        <a href="/tickets/?cursor={{ next_cursor }}" class="btn btn-secondary">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

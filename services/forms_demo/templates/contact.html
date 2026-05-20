@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<h1 style="font-size: 1.3rem; margin-bottom: 1rem;">Contact Form</h1>
+<p class="muted" style="margin-bottom: 1rem;">8 field types, per-field clean (future date), cross-field clean (urgent requires due date).</p>
+
+{% if success %}<div class="success">Message sent successfully!</div>{% endif %}
+
+<form method="post" style="max-width: 500px;">
+    {{ form.as_div() | safe }}
+    <button type="submit" class="btn" style="margin-top: 0.5rem;">Send Message</button>
+</form>
+{% endblock %}
